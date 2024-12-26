@@ -201,7 +201,7 @@ public class SpurGearPart
 				}
 			case ProcessingType.Nitriding:
 				{
-					sigmaFLim = 12 * ((surfaceHardness.Item1 * 0.42 + surfaceHardness.Item2 * 0.56) / 2) + 300; // 26..32?
+					sigmaFLim = 12 * ((surfaceHardness.Item1 * 0.52 + surfaceHardness.Item2 * 0.51) / 2) + 300; // 26..32?
 
 					break;
 				}
@@ -279,5 +279,37 @@ public class SpurGearPart
 		}
 
 		return yn;
+	}
+
+	/// <summary>
+	/// Вычисление Коэффициента безопасности
+	/// </summary>
+	/// <returns></returns>
+	public double CalculateSF()
+	{
+		switch (ProcessingType)
+		{
+			case ProcessingType.Enhancement:
+			case ProcessingType.Normalization:
+			case ProcessingType.Nitriding:
+				{
+					return 1.75;
+				}
+			case ProcessingType.Cementation:
+				{
+					return 1.55;
+				}
+		}
+
+		return 0;
+	}
+
+	/// <summary>
+	/// Вычисление допускаемого напряжения изгиба
+	/// </summary>
+	/// <returns></returns>
+	public double CalculateSigmaF()
+	{
+		return Math.Round((CalculateSigmaFlim() / CalculateSF()) * CalculateYA() * CalculateYN());
 	}
 }
