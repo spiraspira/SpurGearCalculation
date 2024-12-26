@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpurGearCalculation", "SpurGearCalculation\SpurGearCalculation.csproj", "{59BF9247-4770-49AD-8337-40AD56071AEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpurGearCalculation", "SpurGearCalculation.csproj", "{59BF9247-4770-49AD-8337-40AD56071AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpurGearCalculation.API", "SpurGearCalculation.API\SpurGearCalculation.API.csproj", "{D17BD96C-E3A5-4FEE-A7A2-81AC34947B50}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpurGearCalculation.Sandbox", "SpurGearCalculation.Sandbox\SpurGearCalculation.Sandbox.csproj", "{8C457CE3-6F17-4D2E-A86A-74A3F263319F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpurGearCalculation.API", "..\SpurGearCalculation.API\SpurGearCalculation.API.csproj", "{D17BD96C-E3A5-4FEE-A7A2-81AC34947B50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{D17BD96C-E3A5-4FEE-A7A2-81AC34947B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D17BD96C-E3A5-4FEE-A7A2-81AC34947B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D17BD96C-E3A5-4FEE-A7A2-81AC34947B50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C457CE3-6F17-4D2E-A86A-74A3F263319F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C457CE3-6F17-4D2E-A86A-74A3F263319F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C457CE3-6F17-4D2E-A86A-74A3F263319F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C457CE3-6F17-4D2E-A86A-74A3F263319F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
