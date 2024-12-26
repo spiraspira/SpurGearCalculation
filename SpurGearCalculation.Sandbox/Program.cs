@@ -27,3 +27,8 @@ Console.WriteLine($"Эквивалентное число циклов для ш
 Console.WriteLine($"Эквивалентное число циклов для колеса: {spurGear.Wheel.CalculateNFE()}");
 Console.WriteLine($"Коэффициент долговечности шестерни: {spurGear.Gear.CalculateYN()}");
 Console.WriteLine($"Коэффициент долговечности колеса: {spurGear.Wheel.CalculateYN()}");
+Console.WriteLine($"Коэффициент безопасности шестерни: {spurGear.Gear.CalculateYN()}");
+Console.WriteLine($"Коэффициент безопасности шестерни: {spurGear.Gear.CalculateSF()}");
+Console.WriteLine($"Коэффициент безопасности колеса: {spurGear.Wheel.CalculateSF()}");
+Console.WriteLine($"Допускаемое напряжение изгиба шестерни: {spurGear.Gear.CalculateSigmaF()}");
+Console.WriteLine($"Допускаемое напряжение изгиба колеса: {spurGear.Wheel.CalculateSigmaF()}");
