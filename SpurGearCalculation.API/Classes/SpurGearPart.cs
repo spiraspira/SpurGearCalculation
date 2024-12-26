@@ -312,4 +312,36 @@ public class SpurGearPart
 	{
 		return Math.Round((CalculateSigmaFlim() / CalculateSF()) * CalculateYA() * CalculateYN());
 	}
+
+	/// <summary>
+	/// Вычисление максимального допускаемого контактного напряжения.
+	/// </summary>
+	/// <returns></returns>
+	public double CalculateSigmaHMax()
+	{
+		SteelMechanicalProperty steelProperty =
+			SteelMechanicalPropertiesTable.SteelMechanicalProperties.First(s =>
+				s.SteelType == SteelType && s.ProcessingType == ProcessingType);
+
+		double steelHardness = (steelProperty.SurfaceHardness.Item1 + steelProperty.SurfaceHardness.Item2) / 2;
+
+		switch (ProcessingType)
+		{
+			case ProcessingType.Normalization:
+			case ProcessingType.Enhancement:
+				{
+					return Math.Round(2.8 * steelProperty.SigmaT);
+				}
+			case ProcessingType.Cementation:
+				{
+					return Math.Round(44 * steelHardness);
+				}
+			case ProcessingType.Nitriding:
+				{
+					return Math.Truncate(35 * steelHardness);
+				}
+		}
+
+		return 0;
+	}
 }

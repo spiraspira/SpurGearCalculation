@@ -32,3 +32,7 @@ Console.WriteLine($"Коэффициент безопасности шестер
 Console.WriteLine($"Коэффициент безопасности колеса: {spurGear.Wheel.CalculateSF()}");
 Console.WriteLine($"Допускаемое напряжение изгиба шестерни: {spurGear.Gear.CalculateSigmaF()}");
 Console.WriteLine($"Допускаемое напряжение изгиба колеса: {spurGear.Wheel.CalculateSigmaF()}");
+
+Console.WriteLine("\n===Допускаемые напряжения при перегрузках===");
+Console.WriteLine($"Максимальное допускаемое контактное напряжение шестерни: {spurGear.Gear.CalculateSigmaHMax()}");
+Console.WriteLine($"Максимальное допускаемое контактное напряжение колеса: {spurGear.Wheel.CalculateSigmaHMax()}");
