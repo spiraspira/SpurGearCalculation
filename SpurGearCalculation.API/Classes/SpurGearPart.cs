@@ -344,4 +344,53 @@ public class SpurGearPart
 
 		return 0;
 	}
+
+	/// <summary>
+	/// Определение максимальной величины коэффициента долговечности.
+	/// </summary>
+	/// <returns></returns>
+	public double CalculateYNMax()
+	{
+		SteelMechanicalProperty steelProperty =
+			SteelMechanicalPropertiesTable.SteelMechanicalProperties.First(s =>
+				s.SteelType == SteelType && s.ProcessingType == ProcessingType);
+
+		double steelHardness = (steelProperty.SurfaceHardness.Item1 + steelProperty.SurfaceHardness.Item2) / 2;
+
+		if (steelHardness < 100)
+		{
+			return 2.5;
+		}
+
+		return 4;
+	}
+
+	/// <summary>
+	/// Определение коэффициента учета частоты приложения пиковой нагрузки.
+	/// </summary>
+	/// <returns></returns>
+	public double CalculateKst()
+	{
+		SteelMechanicalProperty steelProperty =
+			SteelMechanicalPropertiesTable.SteelMechanicalProperties.First(s =>
+				s.SteelType == SteelType && s.ProcessingType == ProcessingType);
+
+		double steelHardness = (steelProperty.SurfaceHardness.Item1 + steelProperty.SurfaceHardness.Item2) / 2;
+
+		if (steelHardness < 100)
+		{
+			return 1.2;
+		}
+
+		return 1.3;
+	}
+
+	/// <summary>
+	/// Максимальное допускаемое напряжение изгиба.
+	/// </summary>
+	/// <returns></returns>
+	public double CalculateSigmaFMax()
+	{
+		return Math.Round(0.5 * CalculateSigmaFlim() * CalculateYNMax() * CalculateKst());
+	}
 }
