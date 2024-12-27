@@ -51,3 +51,4 @@ Console.WriteLine($"Делительный диаметр шестерни: {spu
 Console.WriteLine($"Ширина зубчатых колес: {spurGear.bw}");
 Console.WriteLine($"Ширина шестерни: {spurGear.BW1}");
 Console.WriteLine($"Ширина колеса: {spurGear.BW2}");
+Console.WriteLine($"Коэффициент модуля: {spurGear.PsyM}");

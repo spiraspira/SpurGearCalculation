@@ -1,7 +1,7 @@
 ﻿namespace SpurGearCalculation.API.Classes;
 
 public record ModulusCoefficientApproximateValue(
-	TransmissionType transmissionType, // тип трансмиссии
+	TransmissionType TransmissionType, // тип трансмиссии
 	bool IsHardnessLessThan350, // твердость рабочей поверхности зубьев
 	(double, double) PsyMTuple // твердость колеса
 )

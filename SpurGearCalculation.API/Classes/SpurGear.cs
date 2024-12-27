@@ -156,4 +156,17 @@ public class SpurGear()
 			return BW1;
 		}
 	}
+
+	/// <summary>
+	/// Коэффициент модуля колеса.
+	/// </summary>
+	public double PsyM
+	{
+		get
+		{
+			return ModulusCoefficientApproximateValuesTable.ModulusCoefficientApproximateValues.First(m =>
+				m.TransmissionType == TransmissionType.RegularGear &&
+				m.IsHardnessLessThan350 == Wheel.IsHardnessLessThan350).PsyM;
+		}
+	}
 }
