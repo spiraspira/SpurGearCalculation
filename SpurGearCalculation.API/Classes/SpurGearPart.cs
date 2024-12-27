@@ -405,4 +405,28 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// </summary>
 	/// <value></value>
 	public double SigmaFMax => Math.Round(0.5 * SigmaFlim * YNMax * Kst);
+
+	/// <summary>
+	/// Поиск ориентировочных значений коэффициента ширины колеса в таблице.
+	/// </summary>
+	public WheelWidthCoefficient WheelWidthCoefficient
+	{
+		get
+		{
+			return WheelWidthCoefficientTable.WheelWidthCoefficients.First(w =>
+				w.IsHardnessLessThan350 == IsHardnessLessThan350 &&
+				w.WheelArrangementType == WheelArrangementType.Asymmetrical);
+		}
+	}
+
+	/// <summary>
+	/// Вычисление коэффициента ширины колеса относительно делительного диаметра.
+	/// </summary>
+	public double PsyBd
+	{
+		get
+		{
+			return 0.5 * WheelWidthCoefficient.AveragePsyBa * (i + 1);
+		}
+	}
 }
