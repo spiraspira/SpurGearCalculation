@@ -22,7 +22,7 @@ public class SpurGear()
 	/// <summary>
 	/// Установка входных параметров.
 	/// </summary>
-	public void SetGearProperties(int driveLife, WorkMode workMode, bool isReversible, int manufactoringAccuracy, double i, SpurGearPart gear, SpurGearPart wheel)
+	public SpurGear(int driveLife, WorkMode workMode, bool isReversible, int manufactoringAccuracy, double i, SpurGearPart gear, SpurGearPart wheel) : this()
 	{
 		L = driveLife;
 		WorkMode = workMode;
@@ -46,13 +46,16 @@ public class SpurGear()
 	/// <summary>
 	/// Расчет среднего допускаемого контактного напряжения.
 	/// </summary>
-	/// <returns>Среднее допускаемое контактное напряжение.</returns>
-	public double CalculateSigmaH()
+	/// <value>Среднее допускаемое контактное напряжение.</value>
+	public double SigmaH
 	{
-		//double sigmaHm = (Gear.CalculateSigmaH() + Wheel.CalculateSigmaH()) / 2; //среднее допускаемое напряжение
+		get
+		{
+			//double sigmaHm = (Gear.CalculateSigmaH() + Wheel.CalculateSigmaH()) / 2; //среднее допускаемое напряжение
 
-		double sigmaHmin = Math.Min(Gear.CalculateSigmaH(), Wheel.CalculateSigmaH()); //минимальное допускаемое напряжение
+			double sigmaHmin = Math.Min(Gear.SigmaH, Wheel.SigmaH); //минимальное допускаемое напряжение
 
-		return Math.Round(1.25 * sigmaHmin, 2); //допускаемое контактное напряжение
+			return Math.Round(1.25 * sigmaHmin, 2); //допускаемое контактное напряжение
+		}
 	}
 }
