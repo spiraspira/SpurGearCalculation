@@ -182,13 +182,24 @@ public class SpurGear()
 	}
 
 	/// <summary>
-	/// Угол наклона зубьев.
+	/// Угол наклона зубьев в радианах.
+	/// </summary>
+	public double betaRad
+	{
+		get
+		{
+			return Math.Round(Math.Asin(1.1 * Math.PI * Mn / bw), 3);
+		}
+	}
+
+	/// <summary>
+	/// Угол наклона зубьев в градусах.
 	/// </summary>
 	public double beta
 	{
 		get
 		{
-			return Math.Round(Math.Round(Math.Asin(1.1 * Math.PI * Mn / bw), 3) * 180 / Math.PI, 2);
+			return Math.Round(betaRad * 180 / Math.PI, 2);
 		}
 	}
 }
