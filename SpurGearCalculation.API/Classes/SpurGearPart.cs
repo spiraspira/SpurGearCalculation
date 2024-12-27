@@ -429,4 +429,15 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 			return 0.5 * WheelWidthCoefficient.AveragePsyBa * (i + 1);
 		}
 	}
+
+	/// <summary>
+	/// Коэффициент концентрации нагрузки. Сделать ввод с клавиатуры.
+	/// </summary>
+	public double KHBeta
+	{
+		get
+		{
+			return 1.04;
+		}
+	}
 }
