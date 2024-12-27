@@ -49,3 +49,5 @@ Console.WriteLine($"Коэффициент ширины колеса относ�
 Console.WriteLine($"Коэффициент концентрации нагрузки: {spurGear.KHBeta}");
 Console.WriteLine($"Делительный диаметр шестерни: {spurGear.d1}");
 Console.WriteLine($"Ширина зубчатых колес: {spurGear.bw}");
+Console.WriteLine($"Ширина шестерни: {spurGear.BW1}");
+Console.WriteLine($"Ширина колеса: {spurGear.BW2}");

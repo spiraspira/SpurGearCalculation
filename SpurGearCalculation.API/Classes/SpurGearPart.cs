@@ -394,4 +394,8 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// </summary>
 	/// <value></value>
 	public double SigmaFMax => Math.Round(0.5 * SigmaFlim * YNMax * Kst);
+
+	public double d { get; set; }
+
+	public double Bw { get; set; }
 }

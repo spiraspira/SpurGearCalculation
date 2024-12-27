@@ -112,7 +112,9 @@ public class SpurGear()
 	{
 		get
 		{
-			return Kd * Math.Pow((Gear.t * KHBeta) / (Math.Pow(SigmaH, 2) * PsyBd) * ((i + 1) / i), 1.0 / 3.0);
+			Gear.d = Kd * Math.Pow((Gear.t * KHBeta) / (Math.Pow(SigmaH, 2) * PsyBd) * ((i + 1) / i), 1.0 / 3.0);
+
+			return Gear.d;
 		}
 	}
 
@@ -123,7 +125,35 @@ public class SpurGear()
 	{
 		get
 		{
-			return Math.Round(d1 * PsyBd, 3);
+			return Math.Round(Gear.d * PsyBd, 3);
+		}
+	}
+
+	/// <summary>
+	/// Ширина колеса.
+	/// </summary>
+	public double BW2
+	{
+		get
+		{
+			Wheel.Bw = Math.Round(bw);
+
+			return Wheel.Bw;
+		}
+	}
+
+	/// <summary>
+	/// Ширина шестерни.
+	/// </summary>
+	public double BW1
+	{
+		get
+		{
+			var BW1 = BW2 + 6;
+
+			Gear.Bw = BW1;
+
+			return BW1;
 		}
 	}
 }
