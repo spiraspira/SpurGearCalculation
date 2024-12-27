@@ -112,7 +112,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Gear.d = Kd * Math.Pow((Gear.t * KHBeta) / (Math.Pow(SigmaH, 2) * PsyBd) * ((i + 1) / i), 1.0 / 3.0);
+			Gear.d = Math.Round(Kd * Math.Pow(Gear.t * KHBeta / (Math.Pow(SigmaH, 2) * PsyBd) * ((i + 1) / i), 1.0 / 3.0), 1);
 
 			return Gear.d;
 		}
@@ -125,7 +125,7 @@ public class SpurGear()
 	{
 		get
 		{
-			return Math.Round(Gear.d * PsyBd, 3);
+			return Math.Round(Gear.d * PsyBd);
 		}
 	}
 
@@ -167,6 +167,28 @@ public class SpurGear()
 			return ModulusCoefficientApproximateValuesTable.ModulusCoefficientApproximateValues.First(m =>
 				m.TransmissionType == TransmissionType.RegularGear &&
 				m.IsHardnessLessThan350 == Wheel.IsHardnessLessThan350).PsyM;
+		}
+	}
+
+	/// <summary>
+	/// Модуль передачи в нормальном сечении.
+	/// </summary>
+	public double Mn
+	{
+		get
+		{
+			return Math.Round(bw / PsyM);
+		}
+	}
+
+	/// <summary>
+	/// Угол наклона зубьев.
+	/// </summary>
+	public double beta
+	{
+		get
+		{
+			return Math.Round(Math.Round(Math.Asin(1.1 * Math.PI * Mn / bw), 3) * 180 / Math.PI, 2);
 		}
 	}
 }

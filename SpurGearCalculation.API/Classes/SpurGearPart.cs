@@ -180,7 +180,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	{
 		get
 		{
-			return Math.Round((WorkModeProperty.MuH * 60 * 1 * n * TSigma) / 100000) * 100000;
+			return Math.Round(WorkModeProperty.MuH * 60 * 1 * n * TSigma / 100000) * 100000;
 		}
 	}
 
@@ -194,7 +194,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// Расчет допускаемого контактного напряжения.
 	/// </summary>
 	/// <value></value>
-	public double SigmaH => (SigmaHlim / Sh) * ZN;
+	public double SigmaH => SigmaHlim / Sh * ZN;
 
 	/// <summary>
 	/// Коэффициент влияния двухстороннего приложения нагрузки
@@ -249,7 +249,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	{
 		get
 		{
-			return Math.Round((WorkModeProperty.MuF * 60 * 1 * n * TSigma) / 10000) * 10000;
+			return Math.Round(WorkModeProperty.MuF * 60 * 1 * n * TSigma / 10000) * 10000;
 		}
 	}
 
@@ -324,7 +324,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// Вычисление допускаемого напряжения изгиба
 	/// </summary>
 	/// <value></value>
-	public double SigmaF => Math.Round((SigmaFlim / SF) * YA * YN);
+	public double SigmaF => Math.Round(SigmaFlim / SF * YA * YN);
 
 	/// <summary>
 	/// Вычисление максимального допускаемого контактного напряжения.
