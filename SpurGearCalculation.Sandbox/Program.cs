@@ -44,7 +44,7 @@ Console.WriteLine($"Максимальное допускаемое напряж
 
 Console.WriteLine("\n===Делительные диаметры===");
 Console.WriteLine($"Вспомогательный коэффициент: {spurGear.Kd}");
-Console.WriteLine($"Ориентировочное значение коэффициента ширины ...: {spurGear.WheelWidthCoefficient.AveragePsyBa}");
-Console.WriteLine($"Коэффициент ширины ... относительно делительного диаметра: {spurGear.PsyBd}");
-Console.WriteLine($"Коэффициент концентрации нагрузки ...: {spurGear.KHBeta}");
-Console.WriteLine($"Делительный диаметр ...: {spurGear.d}");
+Console.WriteLine($"Ориентировочное значение коэффициента ширины колеса: {spurGear.WheelWidthCoefficient.AveragePsyBa}");
+Console.WriteLine($"Коэффициент ширины колеса относительно делительного диаметра: {spurGear.PsyBd}");
+Console.WriteLine($"Коэффициент концентрации нагрузки: {spurGear.KHBeta}");
+Console.WriteLine($"Делительный диаметр шестерни: {spurGear.d1}");

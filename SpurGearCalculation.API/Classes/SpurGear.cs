@@ -105,7 +105,7 @@ public class SpurGear()
 		}
 	}
 
-	public double d
+	public double d1
 	{
 		get
 		{
