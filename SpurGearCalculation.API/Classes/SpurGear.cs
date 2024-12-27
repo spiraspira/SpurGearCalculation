@@ -58,4 +58,58 @@ public class SpurGear()
 			return Math.Round(1.25 * sigmaHmin, 2); //допускаемое контактное напряжение
 		}
 	}
+
+	/// <summary>
+	/// Поиск ориентировочных значений коэффициента ширины колеса в таблице.
+	/// </summary>
+	public WheelWidthCoefficient WheelWidthCoefficient
+	{
+		get
+		{
+			return WheelWidthCoefficientTable.WheelWidthCoefficients.First(w =>
+				w.IsHardnessLessThan350 == Wheel.IsHardnessLessThan350 &&
+				w.WheelArrangementType == WheelArrangementType.Asymmetrical);
+		}
+	}
+
+	/// <summary>
+	/// Вычисление коэффициента ширины колеса относительно делительного диаметра.
+	/// </summary>
+	public double PsyBd
+	{
+		get
+		{
+			return 0.5 * WheelWidthCoefficient.AveragePsyBa * (i + 1);
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент концентрации нагрузки. Сделать ввод с клавиатуры.
+	/// </summary>
+	public double KHBeta
+	{
+		get
+		{
+			return 1.04;
+		}
+	}
+
+	/// <summary>
+	/// Вспомогательный коэффициент для косозубых колес.
+	/// </summary>
+	public double Kd
+	{
+		get
+		{
+			return 680.0;
+		}
+	}
+
+	public double d
+	{
+		get
+		{
+			return Kd * Math.Pow((Gear.t * KHBeta) / (Math.Pow(SigmaH, 2) * PsyBd) * ((i + 1) / i), 1.0 / 3.0);
+		}
+	}
 }

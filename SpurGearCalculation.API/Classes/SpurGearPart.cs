@@ -24,17 +24,6 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	public int ManufactoringAccuracy { get; set; } //степень точности изготовления колес
 
 	/// <summary>
-	/// Вспомогательный коэффициент для косозубых колес.
-	/// </summary>
-	public double Kd
-	{
-		get
-		{
-			return 680.0;
-		}
-	}
-
-	/// <summary>
 	/// Среднее значение твердости.
 	/// </summary>
 	public double AverageSurfaceHardness
@@ -405,39 +394,4 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// </summary>
 	/// <value></value>
 	public double SigmaFMax => Math.Round(0.5 * SigmaFlim * YNMax * Kst);
-
-	/// <summary>
-	/// Поиск ориентировочных значений коэффициента ширины колеса в таблице.
-	/// </summary>
-	public WheelWidthCoefficient WheelWidthCoefficient
-	{
-		get
-		{
-			return WheelWidthCoefficientTable.WheelWidthCoefficients.First(w =>
-				w.IsHardnessLessThan350 == IsHardnessLessThan350 &&
-				w.WheelArrangementType == WheelArrangementType.Asymmetrical);
-		}
-	}
-
-	/// <summary>
-	/// Вычисление коэффициента ширины колеса относительно делительного диаметра.
-	/// </summary>
-	public double PsyBd
-	{
-		get
-		{
-			return 0.5 * WheelWidthCoefficient.AveragePsyBa * (i + 1);
-		}
-	}
-
-	/// <summary>
-	/// Коэффициент концентрации нагрузки. Сделать ввод с клавиатуры.
-	/// </summary>
-	public double KHBeta
-	{
-		get
-		{
-			return 1.04;
-		}
-	}
 }
