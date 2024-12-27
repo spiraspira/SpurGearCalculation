@@ -184,7 +184,7 @@ public class SpurGear()
 	/// <summary>
 	/// Угол наклона зубьев в радианах.
 	/// </summary>
-	public double betaRad
+	public double betaStrokeRad
 	{
 		get
 		{
@@ -195,11 +195,11 @@ public class SpurGear()
 	/// <summary>
 	/// Угол наклона зубьев в градусах.
 	/// </summary>
-	public double beta
+	public double betaStroke
 	{
 		get
 		{
-			return Math.Round(betaRad * 180 / Math.PI, 2);
+			return Math.Round(betaStrokeRad * 180 / Math.PI, 2);
 		}
 	}
 
@@ -210,11 +210,16 @@ public class SpurGear()
 	{
 		get
 		{
-			var z1 = Math.Ceiling(d1 * Math.Cos(betaRad) / Mn);
+			if (Gear.z == 0)
+			{
+				Gear.z = Math.Ceiling(d1 * Math.Cos(betaStrokeRad) / Mn);
+			}
 
-			Gear.z = z1;
-
-			return z1;
+			return Gear.z;
+		}
+		set
+		{
+			Gear.z = value;
 		}
 	}
 
@@ -238,7 +243,35 @@ public class SpurGear()
 	{
 		get
 		{
-			return Math.Round((Mn * (z1 + z2)) / (2 * Math.Cos(betaRad)), 1);
+			return CenterDistancesStandardValuesList.CenterDistancesStandardValues.MinBy(v => Math.Abs(v - (Mn * (z1 + z2)) / (2 * Math.Cos(betaStrokeRad))));
+		}
+	}
+
+	public double beta
+	{
+		get
+		{
+			double betaRad;
+
+			double beta;
+
+			do
+			{
+				beta = Math.Acos(Mn * (z2 + z1) / (2 * aw));
+
+				betaRad = beta * 180 / Math.PI;
+
+				if (betaRad < 8)
+				{
+					z1 -= 1;
+				}
+				else if (beta > 20)
+				{
+					z1 += 1;
+				}
+			} while (betaRad < 8 || betaRad > 20);
+
+			return Math.Round(Math.Round(beta, 3) * 180 / Math.PI, 2);
 		}
 	}
 }
