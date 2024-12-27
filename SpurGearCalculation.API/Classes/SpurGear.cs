@@ -230,4 +230,15 @@ public class SpurGear()
 			return Wheel.z;
 		}
 	}
+
+	/// <summary>
+	/// Межосевое расстояние.
+	/// </summary>
+	public double aw
+	{
+		get
+		{
+			return Math.Round((Mn * (z1 + z2)) / (2 * Math.Cos(betaRad)), 1);
+		}
+	}
 }

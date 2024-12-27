@@ -56,3 +56,4 @@ Console.WriteLine($"Модуль передачи в нормальном сеч
 Console.WriteLine($"Угол наклона зубьев: {spurGear.beta}");
 Console.WriteLine($"Число зубьев шестерни: {spurGear.z1}");
 Console.WriteLine($"Число зубьев колеса: {spurGear.z2}");
+Console.WriteLine($"Межосевое расстояние: {spurGear.aw}");
