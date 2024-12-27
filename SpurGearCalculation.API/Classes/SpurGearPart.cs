@@ -409,4 +409,20 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// Число зубьев.
 	/// </summary>
 	public double z { get; set; }
+
+	public double da
+	{
+		get
+		{
+			return Math.Round(d + 2 * 2 * 1, 3);
+		}
+	}
+
+	public double df
+	{
+		get
+		{
+			return Math.Round(d - 2 * 2 * (1 + 0.25), 3);
+		}
+	}
 }

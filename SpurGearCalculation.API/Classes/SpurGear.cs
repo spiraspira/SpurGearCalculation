@@ -287,7 +287,9 @@ public class SpurGear()
 	{
 		get
 		{
-			return Math.Round(Mn * z1 / Math.Cos(betaRad), 3);
+			Gear.d = Math.Round(Mn * z1 / Math.Cos(betaRad), 3);
+
+			return Gear.d;
 		}
 	}
 
@@ -295,7 +297,9 @@ public class SpurGear()
 	{
 		get
 		{
-			return Math.Round(Mn * z2 / Math.Cos(betaRad), 3);
+			Wheel.d = Math.Round(Mn * z2 / Math.Cos(betaRad), 3);
+
+			return Wheel.d;
 		}
 	}
 }

@@ -62,3 +62,16 @@ Console.WriteLine($"Число зубьев шестерни: {spurGear.z1}");
 Console.WriteLine($"Число зубьев колеса: {spurGear.z2}");
 Console.WriteLine($"Делительный диаметр шестерни: {spurGear.d1}");
 Console.WriteLine($"Делительный диаметр колеса: {spurGear.d2}");
+
+Console.WriteLine("\b===ПАРАМЕТРЫ ЗУБЧАТОЙ ПЕРЕДАЧИ===");
+Console.WriteLine($"{"Параметр",-40} {"Шестерня",-20} {"Шестерня",-20}");
+Console.WriteLine($"{"Число зубьев z",-40} {spurGear.z1,-20} {spurGear.z2,-20}");
+Console.WriteLine($"{"Модуль mn, мм",-40} {spurGear.Mn,-40}");
+Console.WriteLine($"{"Фактическое передаточное число u = z2/z1",-40} {spurGear.z2 / spurGear.z1,-40}");
+Console.WriteLine($"{"Угол наклона зубьев βº",-40} {spurGear.beta,-40}");
+Console.WriteLine($"{"Делительный диаметр d, мм",-40} {spurGear.d1,-20} {spurGear.d2,-20}");
+Console.WriteLine($"{"Диаметр вершин da, мм",-40} {spurGear.Gear.da,-20} {spurGear.Wheel.da,-20}");
+Console.WriteLine($"{"Диаметр впадин df, мм",-40} {spurGear.Gear.df,-20} {spurGear.Wheel.df,-20}");
+Console.WriteLine($"{"Ширина зубчатого венца bw, мм",-40} {spurGear.Gear.Bw,-20} {spurGear.Wheel.Bw,-20}");
+Console.WriteLine($"{"Коэффициент смещения х",-40} {0,-20} {0,-20}");
+Console.WriteLine($"{"Межосевое расстояние aw, мм",-40} {spurGear.aw,-40}");
