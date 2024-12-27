@@ -24,6 +24,17 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	public int ManufactoringAccuracy { get; set; } //степень точности изготовления колес
 
 	/// <summary>
+	/// Вспомогательный коэффициент для косозубых колес.
+	/// </summary>
+	public double Kd
+	{
+		get
+		{
+			return 680.0;
+		}
+	}
+
+	/// <summary>
 	/// Среднее значение твердости.
 	/// </summary>
 	public double AverageSurfaceHardness
