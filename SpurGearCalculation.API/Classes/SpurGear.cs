@@ -105,11 +105,25 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Делительный диаметр шестерни.
+	/// </summary>
 	public double d1
 	{
 		get
 		{
 			return Kd * Math.Pow((Gear.t * KHBeta) / (Math.Pow(SigmaH, 2) * PsyBd) * ((i + 1) / i), 1.0 / 3.0);
+		}
+	}
+
+	/// <summary>
+	/// Ширина зубчатых колес.
+	/// </summary>
+	public double bw
+	{
+		get
+		{
+			return Math.Round(d1 * PsyBd, 3);
 		}
 	}
 }
