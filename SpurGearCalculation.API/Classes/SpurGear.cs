@@ -108,7 +108,7 @@ public class SpurGear()
 	/// <summary>
 	/// Делительный диаметр шестерни.
 	/// </summary>
-	public double d1
+	public double d1Stroke
 	{
 		get
 		{
@@ -212,7 +212,7 @@ public class SpurGear()
 		{
 			if (Gear.z == 0)
 			{
-				Gear.z = Math.Ceiling(d1 * Math.Cos(betaStrokeRad) / Mn);
+				Gear.z = Math.Ceiling(d1Stroke * Math.Cos(betaStrokeRad) / Mn);
 			}
 
 			return Gear.z;
@@ -251,27 +251,51 @@ public class SpurGear()
 	{
 		get
 		{
-			double betaRad;
+			return Math.Round(Math.Round(betaRad, 3) * 180 / Math.PI, 2);
+		}
+	}
 
+	public double betaRad
+	{
+		get
+		{
 			double beta;
+
+			double betaRad;
 
 			do
 			{
-				beta = Math.Acos(Mn * (z2 + z1) / (2 * aw));
+				betaRad = Math.Acos(Mn * (z2 + z1) / (2 * aw));
 
-				betaRad = beta * 180 / Math.PI;
+				beta = betaRad * 180 / Math.PI;
 
-				if (betaRad < 8)
+				if (beta < 8)
 				{
 					z1 -= 1;
 				}
-				else if (beta > 20)
+				else if (betaRad > 20)
 				{
 					z1 += 1;
 				}
-			} while (betaRad < 8 || betaRad > 20);
+			} while (beta < 8 || beta > 20);
 
-			return Math.Round(Math.Round(beta, 3) * 180 / Math.PI, 2);
+			return Math.Round(betaRad, 3);
+		}
+	}
+
+	public double d1
+	{
+		get
+		{
+			return Math.Round(Mn * z1 / Math.Cos(betaRad), 3);
+		}
+	}
+
+	public double d2
+	{
+		get
+		{
+			return Math.Round(Mn * z2 / Math.Cos(betaRad), 3);
 		}
 	}
 }

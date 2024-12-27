@@ -47,7 +47,7 @@ Console.WriteLine($"Вспомогательный коэффициент: {spur
 Console.WriteLine($"Ориентировочное значение коэффициента ширины колеса: {spurGear.WheelWidthCoefficient.AveragePsyBa}");
 Console.WriteLine($"Коэффициент ширины колеса относительно делительного диаметра: {spurGear.PsyBd}");
 Console.WriteLine($"Коэффициент концентрации нагрузки: {spurGear.KHBeta}");
-Console.WriteLine($"Делительный диаметр шестерни: {spurGear.d1}");
+Console.WriteLine($"Предварительный делительный диаметр шестерни: {spurGear.d1Stroke}");
 Console.WriteLine($"Ширина зубчатых колес: {spurGear.bw}");
 Console.WriteLine($"Ширина шестерни: {spurGear.BW1}");
 Console.WriteLine($"Ширина колеса: {spurGear.BW2}");
@@ -60,3 +60,5 @@ Console.WriteLine($"Межосевое расстояние: {spurGear.aw}");
 Console.WriteLine($"Угол наклона зубьев: {spurGear.beta}");
 Console.WriteLine($"Число зубьев шестерни: {spurGear.z1}");
 Console.WriteLine($"Число зубьев колеса: {spurGear.z2}");
+Console.WriteLine($"Делительный диаметр шестерни: {spurGear.d1}");
+Console.WriteLine($"Делительный диаметр колеса: {spurGear.d2}");
