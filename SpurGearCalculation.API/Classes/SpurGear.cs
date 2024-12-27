@@ -125,7 +125,7 @@ public class SpurGear()
 	{
 		get
 		{
-			return Math.Round(Gear.d * PsyBd);
+			return Math.Ceiling(Gear.d * PsyBd);
 		}
 	}
 
@@ -202,4 +202,6 @@ public class SpurGear()
 			return Math.Round(betaRad * 180 / Math.PI, 2);
 		}
 	}
+
+
 }
