@@ -54,3 +54,5 @@ Console.WriteLine($"Ширина колеса: {spurGear.BW2}");
 Console.WriteLine($"Коэффициент модуля: {spurGear.PsyM}");
 Console.WriteLine($"Модуль передачи в нормальном сечении: {spurGear.Mn}");
 Console.WriteLine($"Угол наклона зубьев: {spurGear.beta}");
+Console.WriteLine($"Число зубьев шестерни: {spurGear.z1}");
+Console.WriteLine($"Число зубьев колеса: {spurGear.z2}");

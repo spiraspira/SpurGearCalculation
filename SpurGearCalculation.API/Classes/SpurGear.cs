@@ -203,5 +203,31 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Число зубьев шестерни.
+	/// </summary>
+	public double z1
+	{
+		get
+		{
+			var z1 = Math.Ceiling(d1 * Math.Cos(betaRad) / Mn);
 
+			Gear.z = z1;
+
+			return z1;
+		}
+	}
+
+	/// <summary>
+	/// Число зубьев колеса.
+	/// </summary>
+	public double z2
+	{
+		get
+		{
+			Wheel.z = z1 * i;
+
+			return Wheel.z;
+		}
+	}
 }

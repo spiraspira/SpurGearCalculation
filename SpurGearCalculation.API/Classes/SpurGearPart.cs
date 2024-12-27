@@ -395,7 +395,18 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// <value></value>
 	public double SigmaFMax => Math.Round(0.5 * SigmaFlim * YNMax * Kst);
 
+	/// <summary>
+	/// Делительный диаметр.
+	/// </summary>
 	public double d { get; set; }
 
+	/// <summary>
+	/// Ширина.
+	/// </summary>
 	public double Bw { get; set; }
+
+	/// <summary>
+	/// Число зубьев.
+	/// </summary>
+	public double z { get; set; }
 }
