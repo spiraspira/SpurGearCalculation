@@ -71,6 +71,11 @@ Console.WriteLine($"Коэффициент распределения нагру
 Console.WriteLine($"Окружная скорость: {spurGear.ipsilon}");
 Console.WriteLine($"Коэффициент динамической нагрузки: {spurGear.KHipsilon}");
 Console.WriteLine($"Коэффициент расчетной нагрузки: {spurGear.KH}");
+Console.WriteLine($"Условие прочности, sigmaH = {spurGear.SigmaHFinal} <= {spurGear.SigmaH} {spurGear.IsSigmaHFinalAcceptable}");
+Console.WriteLine($"Перегрузка/недогрузка: {spurGear.DeltaSigmaH} {spurGear.IsDeltaSigmaHAcceptable}");
+spurGear.OptimizeBw();
+Console.WriteLine($"Условие прочности, sigmaH = {spurGear.SigmaHFinal} <= {spurGear.SigmaH} {spurGear.IsSigmaHFinalAcceptable}");
+Console.WriteLine($"Перегрузка/недогрузка: {spurGear.DeltaSigmaH} {spurGear.IsDeltaSigmaHAcceptable}");
 
 Console.WriteLine("\n===ПАРАМЕТРЫ ЗУБЧАТОЙ ПЕРЕДАЧИ===");
 Console.WriteLine($"{"Параметр",-40} {"Шестерня",-20} {"Шестерня",-20}");

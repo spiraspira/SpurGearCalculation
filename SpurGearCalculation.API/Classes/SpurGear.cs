@@ -125,7 +125,7 @@ public class SpurGear()
 	{
 		get
 		{
-			return Math.Ceiling(Gear.d * PsyBd);
+			return Math.Round(Gear.d * PsyBd);
 		}
 	}
 
@@ -136,9 +136,17 @@ public class SpurGear()
 	{
 		get
 		{
-			Wheel.Bw = Math.Round(bw);
+			if (Wheel.Bw == 0)
+			{
+				Wheel.Bw = Math.Round(bw);
+			}
 
 			return Wheel.Bw;
+		}
+
+		set
+		{
+			Wheel.Bw = value;
 		}
 	}
 
@@ -409,6 +417,57 @@ public class SpurGear()
 		get
 		{
 			return Math.Round(KHalpha * KHBeta * KHipsilon, 2);
+		}
+	}
+
+	public double SigmaHFinal
+	{
+		get
+		{
+			return Math.Round(1.18 * ZHbeta * Math.Sqrt(((210000 * Gear.t * 1000 * KH) / (Math.Pow(d1, 2) * BW2 * Math.Sin(0.698132)) * ((i + 1) / i))), 2);
+		}
+	}
+
+	public bool IsSigmaHFinalAcceptable
+	{
+		get
+		{
+			return SigmaHFinal <= SigmaH;
+		}
+	}
+
+	/// <summary>
+	/// Перегрузка/недогрузка.
+	/// </summary>
+	public double DeltaSigmaH
+	{
+		get
+		{
+			return Math.Round(((SigmaHFinal - SigmaH) / SigmaH) * 100, 2);
+		}
+	}
+
+	public bool IsDeltaSigmaHAcceptable
+	{
+		get
+		{
+			return DeltaSigmaH >= -20.0 && DeltaSigmaH <= 5;
+		}
+	}
+
+	public void OptimizeBw()
+	{
+		while (!IsDeltaSigmaHAcceptable)
+		{
+			if (DeltaSigmaH > 5.0)
+			{
+				BW2 += 10;
+			}
+
+			if (DeltaSigmaH < -20.0)
+			{
+				BW2 -= 10;
+			}
 		}
 	}
 }
