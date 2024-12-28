@@ -63,7 +63,16 @@ Console.WriteLine($"Число зубьев колеса: {spurGear.z2}");
 Console.WriteLine($"Делительный диаметр шестерни: {spurGear.d1}");
 Console.WriteLine($"Делительный диаметр колеса: {spurGear.d2}");
 
-Console.WriteLine("\b===ПАРАМЕТРЫ ЗУБЧАТОЙ ПЕРЕДАЧИ===");
+Console.WriteLine("\n===Проверочные расчеты===");
+Console.WriteLine($"Коэффициент торцового перекрытия: {spurGear.SigmaAlpha}");
+Console.WriteLine($"Коэффициент осевого перекрытия: {spurGear.SigmaBeta} >= 1.1 {spurGear.IsSigmaBetaAcceptable}");
+Console.WriteLine($"Коэффициент повышения прочности по контактным напряжениям: {spurGear.ZHbeta}");
+Console.WriteLine($"Коэффициент распределения нагрузки между зубьями: {spurGear.KHalpha} <= 1.6 {spurGear.IsKHalphaAcceptable}");
+Console.WriteLine($"Окружная скорость: {spurGear.ipsilon}");
+Console.WriteLine($"Коэффициент динамической нагрузки: {spurGear.KHipsilon}");
+Console.WriteLine($"Коэффициент расчетной нагрузки: {spurGear.KH}");
+
+Console.WriteLine("\n===ПАРАМЕТРЫ ЗУБЧАТОЙ ПЕРЕДАЧИ===");
 Console.WriteLine($"{"Параметр",-40} {"Шестерня",-20} {"Шестерня",-20}");
 Console.WriteLine($"{"Число зубьев z",-40} {spurGear.z1,-20} {spurGear.z2,-20}");
 Console.WriteLine($"{"Модуль mn, мм",-40} {spurGear.Mn,-40}");

@@ -302,4 +302,113 @@ public class SpurGear()
 			return Wheel.d;
 		}
 	}
+
+	/// <summary>
+	/// Коэффициент торцового перекрытия.
+	/// </summary>
+	public double SigmaAlpha
+	{
+		get
+		{
+			return Math.Round((0.95 - 1.6 * (1.0 / z1 + 1.0 / z2)) * (1 + Math.Cos(betaRad)) * Math.Cos(betaRad), 3);
+		}
+	}
+
+	public bool IsSigmaAlphaAcceptable
+	{
+		get
+		{
+			return SigmaAlpha >= 1.1;
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент осевого перекрытия.
+	/// </summary>
+	public double SigmaBeta
+	{
+		get
+		{
+			return Math.Round(bw * Math.Sin(betaRad) / (Math.PI * Mn), 3);
+		}
+	}
+
+	public bool IsSigmaBetaAcceptable
+	{
+		get
+		{
+			return SigmaBeta >= 1.1;
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент повышения прочности по контактным напряжениям.
+	/// </summary>
+	public double ZHbeta
+	{
+		get
+		{
+			return Math.Round(Math.Sqrt(Math.Pow(Math.Cos(betaRad), 2) / SigmaAlpha), 3);
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент распределения нагрузки между зубьями.
+	/// </summary>
+	public double KHalpha
+	{
+		get
+		{
+			return 1 + 0.25 * (7 - 5);
+		}
+	}
+
+	public bool IsKHalphaAcceptable
+	{
+		get
+		{
+			return KHalpha <= 1.6;
+		}
+	}
+
+	/// <summary>
+	/// Окружная скорость.
+	/// </summary>
+	public double ipsilon
+	{
+		get
+		{
+			return Math.Round(Math.PI * d1 * Gear.n / 60000, 3);
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент динамической нагрузки.
+	/// </summary>
+	public double KHipsilon
+	{
+		get
+		{
+			double khipsilon = 0;
+
+			//Добавить условие для иных скоростей по таблице В.1
+			if (ipsilon <= 1.0)
+			{
+				khipsilon = 1.0;
+			}
+
+			return khipsilon;
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент расчетной нагрузки.
+	/// </summary>
+	public double KH
+	{
+		get
+		{
+			return Math.Round(KHalpha * KHBeta * KHipsilon, 2);
+		}
+	}
 }
