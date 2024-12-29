@@ -48,7 +48,7 @@ Console.WriteLine($"Ориентировочное значение коэффи
 Console.WriteLine($"Коэффициент ширины колеса относительно делительного диаметра: {spurGear.PsyBd}");
 Console.WriteLine($"Коэффициент концентрации нагрузки: {spurGear.KHBeta}");
 Console.WriteLine($"KHalpha = {spurGear.KHalpha} {spurGear.IsKHalphaAcceptable}");
-Console.WriteLine($"Межосевое расстояние: {spurGear.aw}");
+Console.WriteLine($"Межосевое расстояние: {spurGear.Aw}");
 Console.WriteLine($"Ширина зубчатых колес: {spurGear.bw}");
 Console.WriteLine($"Ширина шестерни: {spurGear.BW1}");
 Console.WriteLine($"Ширина колеса: {spurGear.BW2}");
@@ -61,6 +61,8 @@ Console.WriteLine($"Делительный диаметр шестерни: {spu
 Console.WriteLine($"Делительный диаметр колеса: {spurGear.d2}");
 
 Console.WriteLine("\n===Проверочные расчеты===");
+spurGear.OptimizeAw();
+spurGear.OptimizeModule();
 Console.WriteLine($"Коэффициент торцового перекрытия: {spurGear.SigmaAlpha}");
 Console.WriteLine($"Коэффициент осевого перекрытия: {spurGear.SigmaBeta} >= 1.1 {spurGear.IsSigmaBetaAcceptable}");
 Console.WriteLine($"Коэффициент повышения прочности по контактным напряжениям: {spurGear.ZHbeta}");
@@ -70,7 +72,6 @@ Console.WriteLine($"Коэффициент динамической нагруз
 Console.WriteLine($"Коэффициент расчетной нагрузки: {spurGear.KH}");
 Console.WriteLine($"Условие прочности, sigmaH = {spurGear.SigmaHFinal} <= {spurGear.SigmaH} {spurGear.IsSigmaHFinalAcceptable}");
 Console.WriteLine($"Перегрузка/недогрузка: {spurGear.DeltaSigmaH} {spurGear.IsDeltaSigmaHAcceptable}");
-spurGear.OptimizeBw();
 Console.WriteLine($"Условие прочности, sigmaH = {spurGear.SigmaHFinal} <= {spurGear.SigmaH} {spurGear.IsSigmaHFinalAcceptable}");
 Console.WriteLine($"Перегрузка/недогрузка: {spurGear.DeltaSigmaH} {spurGear.IsDeltaSigmaHAcceptable}");
 Console.WriteLine($"Окружная сила: {spurGear.Ft}");
@@ -88,6 +89,8 @@ spurGear.SetKFbeta(1.12);
 spurGear.SetKFipsilon(1.0);
 Console.WriteLine($"Коэффициент расчетной нагрузки по напряжениям изгиба: {spurGear.KF}");
 Console.WriteLine($"Напряжение изгиба: {spurGear.SigmaFFinal} > {spurGear.SigmaF} {spurGear.IsSigmaFFinalAcceptable}");
+spurGear.OptimizeBw();
+spurGear.OptimizeBw();
 Console.WriteLine($"Перегрузка: {spurGear.DeltaSigmaF} > -30% {spurGear.IsDeltaSigmaFAcceptable}");
 Console.WriteLine($"{spurGear.SigmaHFinalMax} <= {spurGear.SigmaHMax} {spurGear.IsSigmaHFinalMaxAcceptable}");
 Console.WriteLine($"{spurGear.SigmaFFinalMax} <= {spurGear.SigmaFMax} {spurGear.IsSigmaFFinalMaxAcceptable}");
@@ -103,4 +106,4 @@ Console.WriteLine($"{"Диаметр вершин da, мм",-40} {spurGear.Gear.
 Console.WriteLine($"{"Диаметр впадин df, мм",-40} {spurGear.Gear.df,-20} {spurGear.Wheel.df,-20}");
 Console.WriteLine($"{"Ширина зубчатого венца bw, мм",-40} {spurGear.Gear.Bw,-20} {spurGear.Wheel.Bw,-20}");
 Console.WriteLine($"{"Коэффициент смещения х",-40} {0,-20} {0,-20}");
-Console.WriteLine($"{"Межосевое расстояние aw, мм",-40} {spurGear.aw,-40}");
+Console.WriteLine($"{"Межосевое расстояние Aw, мм",-40} {spurGear.Aw,-40}");
