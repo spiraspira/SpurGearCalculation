@@ -88,9 +88,9 @@ public class SpurGear()
 	public double KHBeta => 1.04;
 
 	/// <summary>
-	/// Вспомогательный коэффициент для косозубых колес.
+	/// Вспомогательный коэффициент для прямозубых колес.
 	/// </summary>
-	public double Kd => 680.0;
+	public double Kd => 780.0;
 
 	/// <summary>
 	/// Делительный диаметр шестерни.
