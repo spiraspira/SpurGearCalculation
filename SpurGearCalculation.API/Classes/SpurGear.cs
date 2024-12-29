@@ -56,13 +56,15 @@ public class SpurGear()
 	{
 		get
 		{
-			//double sigmaHm = (Gear.CalculateSigmaH() + Wheel.CalculateSigmaH()) / 2; //среднее допускаемое напряжение
-
-			double sigmaHmin = Math.Min(Gear.SigmaH, Wheel.SigmaH); //минимальное допускаемое напряжение
-
-			return Math.Round(1.25 * sigmaHmin, 2); //допускаемое контактное напряжение
+			return Math.Min(SigmaHm, SigmaHn);
 		}
 	}
+
+	public double SigmaHmin => Math.Min(Gear.SigmaH, Wheel.SigmaH);
+
+	public double SigmaHn => 1.25 * SigmaHmin;
+
+	public double SigmaHm => (Gear.SigmaH + Wheel.SigmaH) / 2.0;
 
 	/// <summary>
 	/// Поиск ориентировочных значений коэффициента ширины колеса в таблице.

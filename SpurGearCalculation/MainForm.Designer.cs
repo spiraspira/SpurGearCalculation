@@ -109,7 +109,7 @@
 			cb_Kd.Items.AddRange(new object[] { "Пятидневный", "Шестидневный" });
 			cb_Kd.Location = new Point(212, 59);
 			cb_Kd.Name = "cb_Kd";
-			cb_Kd.Size = new Size(151, 28);
+			cb_Kd.Size = new Size(188, 28);
 			cb_Kd.TabIndex = 4;
 			// 
 			// label3
@@ -129,7 +129,7 @@
 			cb_Ks.Items.AddRange(new object[] { "Односменный", "Двухсменный" });
 			cb_Ks.Location = new Point(212, 93);
 			cb_Ks.Name = "cb_Ks";
-			cb_Ks.Size = new Size(151, 28);
+			cb_Ks.Size = new Size(188, 28);
 			cb_Ks.TabIndex = 6;
 			// 
 			// cb_WorkModeType
@@ -140,7 +140,7 @@
 			cb_WorkModeType.Items.AddRange(new object[] { "0 - Постоянный", "I - Тяжелый", "II - Средний равновероятный", "III - Средний нормальный", "IV - Легкий", "V - Особо легкий" });
 			cb_WorkModeType.Location = new Point(212, 127);
 			cb_WorkModeType.Name = "cb_WorkModeType";
-			cb_WorkModeType.Size = new Size(151, 28);
+			cb_WorkModeType.Size = new Size(188, 28);
 			cb_WorkModeType.TabIndex = 7;
 			// 
 			// label4
@@ -331,7 +331,7 @@
 			cb_IsReversible.Items.AddRange(new object[] { "Реверсивный", "Нереверсивный" });
 			cb_IsReversible.Location = new Point(212, 164);
 			cb_IsReversible.Name = "cb_IsReversible";
-			cb_IsReversible.Size = new Size(151, 28);
+			cb_IsReversible.Size = new Size(188, 28);
 			cb_IsReversible.TabIndex = 27;
 			// 
 			// groupBox2
@@ -431,10 +431,11 @@
 			// 
 			// rtb_Log
 			// 
+			rtb_Log.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
 			rtb_Log.Location = new Point(608, 74);
 			rtb_Log.Name = "rtb_Log";
 			rtb_Log.ReadOnly = true;
-			rtb_Log.Size = new Size(372, 225);
+			rtb_Log.Size = new Size(538, 440);
 			rtb_Log.TabIndex = 28;
 			rtb_Log.Text = "";
 			// 
@@ -451,16 +452,17 @@
 			// 
 			b_Calculate.Location = new Point(608, 12);
 			b_Calculate.Name = "b_Calculate";
-			b_Calculate.Size = new Size(372, 29);
+			b_Calculate.Size = new Size(538, 29);
 			b_Calculate.TabIndex = 30;
 			b_Calculate.Text = "Вычислить";
 			b_Calculate.UseVisualStyleBackColor = true;
+			b_Calculate.Click += b_Calculate_Click;
 			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(992, 526);
+			ClientSize = new Size(1158, 526);
 			Controls.Add(b_Calculate);
 			Controls.Add(label18);
 			Controls.Add(rtb_Log);
