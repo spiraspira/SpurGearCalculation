@@ -47,16 +47,22 @@ Console.WriteLine($"Вспомогательный коэффициент: {spur
 Console.WriteLine($"Ориентировочное значение коэффициента ширины колеса: {spurGear.WheelWidthCoefficient.AveragePsyBa}");
 Console.WriteLine($"Коэффициент ширины колеса относительно делительного диаметра: {spurGear.PsyBd}");
 Console.WriteLine($"Коэффициент концентрации нагрузки: {spurGear.KHBeta}");
-Console.WriteLine($"Предварительный делительный диаметр шестерни: {spurGear.d1Stroke}");
+Console.WriteLine($"KHalpha = {spurGear.KHalpha} {spurGear.IsKHalphaAcceptable}");
+Console.WriteLine($"Межосевое расстояние: {spurGear.aw}");
 Console.WriteLine($"Ширина зубчатых колес: {spurGear.bw}");
 Console.WriteLine($"Ширина шестерни: {spurGear.BW1}");
 Console.WriteLine($"Ширина колеса: {spurGear.BW2}");
 Console.WriteLine($"Коэффициент модуля: {spurGear.PsyM}");
-Console.WriteLine($"Модуль передачи в нормальном сечении: {spurGear.Mn}");
+Console.WriteLine($"Модуль передачи в нормальном сечении: {spurGear.M}");
+
+Console.WriteLine($"Предварительный делительный диаметр шестерни: {spurGear.d1Stroke}");
+
+
+
 Console.WriteLine($"Предварительный угол наклона зубьев: {spurGear.betaStroke}");
 Console.WriteLine($"Предварительное число зубьев шестерни: {spurGear.z1}");
 Console.WriteLine($"Предварительное число зубьев колеса: {spurGear.z2}");
-Console.WriteLine($"Межосевое расстояние: {spurGear.aw}");
+
 Console.WriteLine($"Угол наклона зубьев: {spurGear.beta}");
 Console.WriteLine($"Число зубьев шестерни: {spurGear.z1}");
 Console.WriteLine($"Число зубьев колеса: {spurGear.z2}");
@@ -98,7 +104,7 @@ Console.WriteLine($"{spurGear.SigmaFFinalMax} <= {spurGear.SigmaFMax} {spurGear.
 Console.WriteLine("\n===ПАРАМЕТРЫ ЗУБЧАТОЙ ПЕРЕДАЧИ===");
 Console.WriteLine($"{"Параметр",-40} {"Шестерня",-20} {"Шестерня",-20}");
 Console.WriteLine($"{"Число зубьев z",-40} {spurGear.z1,-20} {spurGear.z2,-20}");
-Console.WriteLine($"{"Модуль mn, мм",-40} {spurGear.Mn,-40}");
+Console.WriteLine($"{"Модуль mn, мм",-40} {spurGear.M,-40}");
 Console.WriteLine($"{"Фактическое передаточное число u = z2/z1",-40} {spurGear.z2 / spurGear.z1,-40}");
 Console.WriteLine($"{"Угол наклона зубьев βº",-40} {spurGear.beta,-40}");
 Console.WriteLine($"{"Делительный диаметр d, мм",-40} {spurGear.d1,-20} {spurGear.d2,-20}");

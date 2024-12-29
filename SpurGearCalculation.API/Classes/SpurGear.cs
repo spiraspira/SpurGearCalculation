@@ -5,7 +5,7 @@
 /// </summary>
 public class SpurGear()
 {
-	private double mn = 0;
+	private double m = 0;
 
 	public double Kp { get; set; } //коэффициент перегрузки
 
@@ -108,7 +108,7 @@ public class SpurGear()
 	/// <summary>
 	/// Ширина зубчатых колес.
 	/// </summary>
-	public double bw => Math.Round(Gear.d * PsyBd);
+	public double bw => Math.Round(aw * WheelWidthCoefficient.AveragePsyBa);
 
 	/// <summary>
 	/// Ширина колеса.
@@ -139,7 +139,7 @@ public class SpurGear()
 	{
 		get
 		{
-			var BW1 = BW2 + 6;
+			var BW1 = BW2 + 8;
 
 			Gear.Bw = BW1;
 
@@ -163,25 +163,25 @@ public class SpurGear()
 	/// <summary>
 	/// Модуль передачи в нормальном сечении.
 	/// </summary>
-	public double Mn
+	public double M
 	{
 		get
 		{
-			if (mn == 0)
+			if (m == 0)
 			{
-				mn = StandardModuleValuesList.StandardModuleValues.MinBy(value => Math.Abs(value - bw / PsyM));
+				m = StandardModuleValuesList.StandardModuleValues.MinBy(value => Math.Abs(value - (bw / PsyM)));
 			}
 
-			return mn;
+			return m;
 		}
 
-		set => mn = value;
+		set => m = value;
 	}
 
 	/// <summary>
 	/// Угол наклона зубьев в радианах.
 	/// </summary>
-	public double betaStrokeRad => Math.Round(Math.Asin(1.1 * Math.PI * Mn / bw), 3);
+	public double betaStrokeRad => Math.Round(Math.Asin(1.1 * Math.PI * M / bw), 3);
 
 	/// <summary>
 	/// Угол наклона зубьев в градусах.
@@ -197,7 +197,7 @@ public class SpurGear()
 		{
 			if (Gear.z == 0)
 			{
-				Gear.z = Math.Ceiling(d1Stroke * Math.Cos(betaStrokeRad) / Mn);
+				Gear.z = Math.Ceiling(d1Stroke * Math.Cos(betaStrokeRad) / M);
 			}
 
 			return Gear.z;
@@ -225,7 +225,7 @@ public class SpurGear()
 	{
 		get
 		{
-			return CenterDistancesStandardValuesList.CenterDistancesStandardValues.MinBy(v => Math.Abs(v - (Mn * (z1 + z2)) / (2 * Math.Cos(betaStrokeRad))));
+			return CenterDistancesStandardValuesList.CenterDistancesStandardValues.MinBy(v => Math.Abs(v - (0.85 * (i + 1) * Math.Pow((210000 * Wheel.t * 1000 * KHalpha * KHBeta) / (Math.Pow(SigmaH, 2) * Math.Pow(i, 2) * WheelWidthCoefficient.AveragePsyBa), 1.0 / 3.0))));
 		}
 	}
 
@@ -247,7 +247,7 @@ public class SpurGear()
 
 			do
 			{
-				betaRad = Math.Acos(Mn * (z2 + z1) / (2 * aw));
+				betaRad = Math.Acos(M * (z2 + z1) / (2 * aw));
 
 				beta = betaRad * 180 / Math.PI;
 
@@ -272,7 +272,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Gear.d = Math.Round(Mn * z1 / Math.Cos(betaRad), 3);
+			Gear.d = Math.Round(M * z1 / Math.Cos(betaRad), 3);
 
 			return Gear.d;
 		}
@@ -285,7 +285,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Wheel.d = Math.Round(Mn * z2 / Math.Cos(betaRad), 3);
+			Wheel.d = Math.Round(M * z2 / Math.Cos(betaRad), 3);
 
 			return Wheel.d;
 		}
@@ -301,7 +301,7 @@ public class SpurGear()
 	/// <summary>
 	/// Коэффициент осевого перекрытия.
 	/// </summary>
-	public double SigmaBeta => Math.Round(bw * Math.Sin(betaRad) / (Math.PI * Mn), 3);
+	public double SigmaBeta => Math.Round(bw * Math.Sin(betaRad) / (Math.PI * M), 3);
 
 	public bool IsSigmaBetaAcceptable => SigmaBeta >= 1.1;
 
@@ -461,7 +461,7 @@ public class SpurGear()
 
 	public double KF => Math.Round(KFbeta * KFalpha * KFipsilon, 2);
 
-	public double SigmaFFinal => Math.Round((Ft * KF * Yfs * YFbeta) / (bw * Mn));
+	public double SigmaFFinal => Math.Round((Ft * KF * Yfs * YFbeta) / (bw * M));
 
 	public bool IsSigmaFFinalAcceptable => SigmaFFinal > SigmaF;
 
@@ -476,9 +476,9 @@ public class SpurGear()
 	{
 		while (!IsDeltaSigmaFAcceptable)
 		{
-			var index = StandardModuleValuesList.StandardModuleValues.IndexOf(Mn);
+			var index = StandardModuleValuesList.StandardModuleValues.IndexOf(M);
 
-			Mn = StandardModuleValuesList.StandardModuleValues[index - 1];
+			M = StandardModuleValuesList.StandardModuleValues[index - 1];
 		}
 	}
 
