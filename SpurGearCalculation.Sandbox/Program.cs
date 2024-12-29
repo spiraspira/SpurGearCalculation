@@ -4,7 +4,7 @@ using SpurGearCalculation.API.Enums;
 WorkMode workMode = new(5, 2, WorkModeType.II);
 SpurGearPart gear = new(SteelType.Steel40X, ProcessingType.Nitriding, 66.85, 227.4);
 SpurGearPart wheel = new(SteelType.Steel40X, ProcessingType.Enhancement, 16.71, 873.5);
-SpurGear spurGear = new(5, workMode, false, 7, 4, gear, wheel);
+SpurGear spurGear = new(5, workMode, false, 7, 4, 3, gear, wheel);
 
 Console.WriteLine("===Допускаемые контактные напряжения===");
 Console.WriteLine($"Предел контактной выносливости шестерни: {spurGear.Gear.SigmaHlim}");
@@ -90,6 +90,10 @@ Console.WriteLine($"Коэффициент повышения прочности
 spurGear.SetKFbeta(1.12);
 spurGear.SetKFipsilon(1.0);
 Console.WriteLine($"Коэффициент расчетной нагрузки по напряжениям изгиба: {spurGear.KF}");
+Console.WriteLine($"Напряжение изгиба: {spurGear.SigmaFFinal} > {spurGear.SigmaF} {spurGear.IsSigmaFFinalAcceptable}");
+Console.WriteLine($"Перегрузка: {spurGear.DeltaSigmaF} > -30% {spurGear.IsDeltaSigmaFAcceptable}");
+Console.WriteLine($"{spurGear.SigmaHFinalMax} <= {spurGear.SigmaHMax} {spurGear.IsSigmaHFinalMaxAcceptable}");
+Console.WriteLine($"{spurGear.SigmaFFinalMax} <= {spurGear.SigmaFMax} {spurGear.IsSigmaFFinalMaxAcceptable}");
 
 Console.WriteLine("\n===ПАРАМЕТРЫ ЗУБЧАТОЙ ПЕРЕДАЧИ===");
 Console.WriteLine($"{"Параметр",-40} {"Шестерня",-20} {"Шестерня",-20}");

@@ -6,11 +6,5 @@ public record ModulusCoefficientApproximateValue(
 	(double, double) PsyMTuple // твердость колеса
 )
 {
-	public double PsyM
-	{
-		get
-		{
-			return Math.Round((PsyMTuple.Item1 + PsyMTuple.Item2) / 2, 1);
-		}
-	}
+	public double PsyM => Math.Round((PsyMTuple.Item1 + PsyMTuple.Item2) / 2, 1);
 }
