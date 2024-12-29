@@ -76,6 +76,20 @@ Console.WriteLine($"Перегрузка/недогрузка: {spurGear.DeltaSi
 spurGear.OptimizeBw();
 Console.WriteLine($"Условие прочности, sigmaH = {spurGear.SigmaHFinal} <= {spurGear.SigmaH} {spurGear.IsSigmaHFinalAcceptable}");
 Console.WriteLine($"Перегрузка/недогрузка: {spurGear.DeltaSigmaH} {spurGear.IsDeltaSigmaHAcceptable}");
+Console.WriteLine($"Окружная сила: {spurGear.Ft}");
+Console.WriteLine($"Fr: {spurGear.Fr}");
+Console.WriteLine($"Fa: {spurGear.Fa}");
+Console.WriteLine($"Эквивалентное число зубьев шестерни: {spurGear.Znu1}");
+Console.WriteLine($"Эквивалентное число зубьев колеса: {spurGear.Znu2}");
+spurGear.SetYFSs(3.81, 3.76);
+Console.WriteLine($"Отношение [SigmaH]/Yfs шестерни: {spurGear.Gear.SigmaFYfsRelation}");
+Console.WriteLine($"Отношение [SigmaH]/Yfs колеса: {spurGear.Wheel.SigmaFYfsRelation}");
+Console.WriteLine($"SigmaF: {spurGear.SigmaF}");
+Console.WriteLine($"Yfs: {spurGear.Yfs}");
+Console.WriteLine($"Коэффициент повышения прочности косозубых передач по напряжениям изгиба: {spurGear.YFbeta}");
+spurGear.SetKFbeta(1.12);
+spurGear.SetKFipsilon(1.0);
+Console.WriteLine($"Коэффициент расчетной нагрузки по напряжениям изгиба: {spurGear.KF}");
 
 Console.WriteLine("\n===ПАРАМЕТРЫ ЗУБЧАТОЙ ПЕРЕДАЧИ===");
 Console.WriteLine($"{"Параметр",-40} {"Шестерня",-20} {"Шестерня",-20}");

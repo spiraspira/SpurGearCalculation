@@ -490,5 +490,172 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Окружная сила Ft.
+	/// </summary>
+	public double Ft
+	{
+		get
+		{
+			return Math.Round(2 * Gear.t * 1000 / d1);
+		}
+	}
 
+	/// <summary>
+	/// ?
+	/// </summary>
+	public double Fr
+	{
+		get
+		{
+			return Math.Round(Ft * Math.Tan(0.349) / Math.Cos(betaRad));
+		}
+	}
+
+	/// <summary>
+	/// ?
+	/// </summary>
+	public double Fa
+	{
+		get
+		{
+			return Math.Round(Ft * Math.Tan(betaRad));
+		}
+	}
+
+	/// <summary>
+	/// Эквивалентное число зубьев шестерни.
+	/// </summary>
+	public double Znu1
+	{
+		get
+		{
+			return Math.Round(z1 / Math.Pow(Math.Cos(betaRad), 3), 1);
+		}
+	}
+
+	/// <summary>
+	/// Эквивалентное число зубьев колеса.
+	/// </summary>
+	public double Znu2
+	{
+		get
+		{
+			return Math.Round(z2 / Math.Pow(Math.Cos(betaRad), 3), 1);
+		}
+	}
+
+	/// <summary>
+	/// Установка коэффициентов формы зуба (выбираем вручную по графику).
+	/// </summary>
+	public void SetYFSs(double yfs1, double yfs2)
+	{
+		Gear.Yfs = yfs1;
+
+		Wheel.Yfs = yfs2;
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public double SigmaF
+	{
+		get
+		{
+			return Gear.SigmaFYfsRelation > Wheel.SigmaFYfsRelation ? Wheel.SigmaF : Gear.SigmaF;
+		}
+	}
+
+	public double Yfs
+	{
+		get
+		{
+			return Gear.SigmaFYfsRelation > Wheel.SigmaFYfsRelation ? Wheel.Yfs : Gear.Yfs;
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент повышения прочности косозубых передач по напряжениям изгиба.
+	/// </summary>
+	public double YFbeta
+	{
+		get
+		{
+			var yfbeta = Math.Round((1 - beta / 100) / SigmaAlpha, 3);
+
+			return yfbeta >= 0.7 ? yfbeta : 0.7;
+		}
+	}
+
+	public double KFalpha
+	{
+		get
+		{
+			return KHalpha;
+		}
+	}
+
+	public double KFbeta { get; set; }
+
+	/// <summary>
+	/// Ввод KFbeta, выбираем вручную по таблице 2.7.
+	/// </summary>
+	public void SetKFbeta(double kfbeta)
+	{
+		KFbeta = kfbeta;
+	}
+
+	public double KFipsilon { get; set; }
+
+	/// <summary>
+	/// Ввод KFipsilon, выбираем вручную по таблице В.1.
+	/// </summary>
+	/// <param name="kfipsilon"></param>
+	public void SetKFipsilon(double kfipsilon)
+	{
+		KFipsilon = kfipsilon;
+	}
+
+	public double KF
+	{
+		get
+		{
+			return Math.Round(KFbeta * KFalpha * KFipsilon, 2);
+		}
+	}
+
+	public double SigmaFFinal
+	{
+		get
+		{
+			return Math.Round((Ft * KF * Yfs * YFbeta) / (bw * Mn));
+		}
+	}
+
+	public bool IsSigmaFFinalAcceptable
+	{
+		get
+		{
+			return SigmaFFinal <= SigmaF;
+		}
+	}
+
+	/// <summary>
+	/// Перегрузка/недогрузка.
+	/// </summary>
+	public double DeltaSigmaF
+	{
+		get
+		{
+			return Math.Round(((SigmaFFinal - SigmaF) / SigmaF) * 100, 2);
+		}
+	}
+
+	public bool IsDeltaSigmaFAcceptable
+	{
+		get
+		{
+			return DeltaSigmaF >= -20.0 && DeltaSigmaF <= 5;
+		}
+	}
 }

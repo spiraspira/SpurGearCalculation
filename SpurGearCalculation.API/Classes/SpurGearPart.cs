@@ -235,7 +235,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 					}
 			}
 
-			return sigmaFLim;
+			return Math.Truncate(sigmaFLim);
 		}
 	}
 
@@ -423,6 +423,19 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 		get
 		{
 			return Math.Round(d - 2 * 2 * (1 + 0.25), 3);
+		}
+	}
+
+	/// <summary>
+	/// Коэффициент формы зуба.
+	/// </summary>
+	public double Yfs { get; set; }
+
+	public double SigmaFYfsRelation
+	{
+		get
+		{
+			return Math.Round(SigmaF / Yfs, 1);
 		}
 	}
 }
