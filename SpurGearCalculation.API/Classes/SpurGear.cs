@@ -188,6 +188,8 @@ public class SpurGear()
 	/// </summary>
 	public double betaStroke => Math.Round(betaStrokeRad * 180 / Math.PI, 2);
 
+	public double zDelta => 2 * aw / M;
+
 	/// <summary>
 	/// Число зубьев шестерни.
 	/// </summary>
@@ -197,7 +199,7 @@ public class SpurGear()
 		{
 			if (Gear.z == 0)
 			{
-				Gear.z = Math.Ceiling(d1Stroke * Math.Cos(betaStrokeRad) / M);
+				Gear.z = zDelta / (i + 1);
 			}
 
 			return Gear.z;
@@ -212,7 +214,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Wheel.z = z1 * i;
+			Wheel.z = zDelta - z1;
 
 			return Wheel.z;
 		}
@@ -272,7 +274,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Gear.d = Math.Round(M * z1 / Math.Cos(betaRad), 3);
+			Gear.d = Math.Round(M * z1);
 
 			return Gear.d;
 		}
@@ -285,7 +287,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Wheel.d = Math.Round(M * z2 / Math.Cos(betaRad), 3);
+			Wheel.d = Math.Round(M * z2);
 
 			return Wheel.d;
 		}

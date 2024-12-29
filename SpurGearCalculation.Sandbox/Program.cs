@@ -54,18 +54,9 @@ Console.WriteLine($"Ширина шестерни: {spurGear.BW1}");
 Console.WriteLine($"Ширина колеса: {spurGear.BW2}");
 Console.WriteLine($"Коэффициент модуля: {spurGear.PsyM}");
 Console.WriteLine($"Модуль передачи в нормальном сечении: {spurGear.M}");
-
-Console.WriteLine($"Предварительный делительный диаметр шестерни: {spurGear.d1Stroke}");
-
-
-
-Console.WriteLine($"Предварительный угол наклона зубьев: {spurGear.betaStroke}");
+Console.WriteLine($"zDelta: {spurGear.zDelta}");
 Console.WriteLine($"Предварительное число зубьев шестерни: {spurGear.z1}");
 Console.WriteLine($"Предварительное число зубьев колеса: {spurGear.z2}");
-
-Console.WriteLine($"Угол наклона зубьев: {spurGear.beta}");
-Console.WriteLine($"Число зубьев шестерни: {spurGear.z1}");
-Console.WriteLine($"Число зубьев колеса: {spurGear.z2}");
 Console.WriteLine($"Делительный диаметр шестерни: {spurGear.d1}");
 Console.WriteLine($"Делительный диаметр колеса: {spurGear.d2}");
 
