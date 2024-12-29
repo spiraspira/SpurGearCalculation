@@ -310,10 +310,12 @@ public class SpurGear()
 	/// </summary>
 	public double ZHbeta => Math.Round(Math.Sqrt(Math.Pow(Math.Cos(betaRad), 2) / SigmaAlpha), 3);
 
+	public double C => 0.06;
+
 	/// <summary>
 	/// Коэффициент распределения нагрузки между зубьями.
 	/// </summary>
-	public double KHalpha => 1 + 0.25 * (7 - 5);
+	public double KHalpha => 1 + C * (7 - 5);
 
 	public bool IsKHalphaAcceptable => KHalpha <= 1.6;
 
