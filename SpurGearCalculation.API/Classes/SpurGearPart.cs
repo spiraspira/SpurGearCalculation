@@ -26,24 +26,12 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// <summary>
 	/// Среднее значение твердости.
 	/// </summary>
-	public double AverageSurfaceHardness
-	{
-		get
-		{
-			return (SteelMechanicalProperty.SurfaceHardness.Item1 + SteelMechanicalProperty.SurfaceHardness.Item2) / 2;
-		}
-	}
+	public double AverageSurfaceHardness => (SteelMechanicalProperty.SurfaceHardness.Item1 + SteelMechanicalProperty.SurfaceHardness.Item2) / 2;
 
 	/// <summary>
 	/// Проверка являются ли единицы твердости единицами Бриннеля.
 	/// </summary>
-	public bool IsHardnessLessThan350
-	{
-		get
-		{
-			return (SteelMechanicalProperty.SurfaceHardness.Item1 + SteelMechanicalProperty.SurfaceHardness.Item2) / 2 > 100;
-		}
-	}
+	public bool IsHardnessLessThan350 => (SteelMechanicalProperty.SurfaceHardness.Item1 + SteelMechanicalProperty.SurfaceHardness.Item2) / 2 > 100;
 
 	/// <summary>
 	/// Получение параметров режима работы.
@@ -176,13 +164,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// </summary>
 	/// <value>n1 либо n2</value>
 	/// <value></value>
-	public double NHE
-	{
-		get
-		{
-			return Math.Round(WorkModeProperty.MuH * 60 * 1 * n * TSigma / 100000) * 100000;
-		}
-	}
+	public double NHE => Math.Round(WorkModeProperty.MuH * 60 * 1 * n * TSigma / 100000) * 100000;
 
 	/// <summary>
 	/// Коэффициент долговечности.
@@ -235,7 +217,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 					}
 			}
 
-			return sigmaFLim;
+			return Math.Truncate(sigmaFLim);
 		}
 	}
 
@@ -245,13 +227,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// <value></value>
 	/// <value></value>
 	/// <value></value>
-	public double NFE
-	{
-		get
-		{
-			return Math.Round(WorkModeProperty.MuF * 60 * 1 * n * TSigma / 10000) * 10000;
-		}
-	}
+	public double NFE => Math.Round(WorkModeProperty.MuF * 60 * 1 * n * TSigma / 10000) * 10000;
 
 	/// <summary>
 	/// Вычисление коэффициента долговечности.
@@ -409,4 +385,15 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// Число зубьев.
 	/// </summary>
 	public double z { get; set; }
+
+	public double da => Math.Round(d + 2 * 2 * 1, 3);
+
+	public double df => Math.Round(d - 2 * 2 * (1 + 0.25), 3);
+
+	/// <summary>
+	/// Коэффициент формы зуба.
+	/// </summary>
+	public double Yfs { get; set; }
+
+	public double SigmaFYfsRelation => Math.Round(SigmaF / Yfs, 1);
 }

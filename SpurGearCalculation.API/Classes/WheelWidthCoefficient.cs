@@ -7,19 +7,7 @@ public record WheelWidthCoefficient(
 	(double, double) PsyBdMax // максимально допустимое значение коэффициента
 )
 {
-	public double AveragePsyBa
-	{
-		get
-		{
-			return Math.Round((PsyBa.Item1 + PsyBa.Item2) / 2, 1);
-		}
-	}
+	public double AveragePsyBa => Math.Round((PsyBa.Item1 + PsyBa.Item2) / 2, 1);
 
-	public double AveragePsyBdMax
-	{
-		get
-		{
-			return Math.Round((PsyBdMax.Item1 + PsyBdMax.Item2) / 2, 1);
-		}
-	}
+	public double AveragePsyBdMax => Math.Round((PsyBdMax.Item1 + PsyBdMax.Item2) / 2, 1);
 }
