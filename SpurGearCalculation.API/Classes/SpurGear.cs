@@ -317,7 +317,7 @@ public class SpurGear()
 	/// </summary>
 	public double KHalpha => 1 + C * (7 - 5);
 
-	public bool IsKHalphaAcceptable => KHalpha <= 1.6;
+	public bool IsKHalphaAcceptable => KHalpha <= 1.25;
 
 	/// <summary>
 	/// Окружная скорость.
