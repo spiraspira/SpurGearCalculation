@@ -147,6 +147,7 @@ public class SpurGear()
 		set
 		{
 			Wheel.Bw = value;
+			var d = BW1;
 		}
 	}
 
@@ -255,6 +256,9 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Финальный угол наклона зубьев в градусах.
+	/// </summary>
 	public double beta
 	{
 		get
@@ -263,6 +267,9 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Финальный угол наклона зубьев в радианах.
+	/// </summary>
 	public double betaRad
 	{
 		get
@@ -291,6 +298,9 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Делительный диаметр шестерни.
+	/// </summary>
 	public double d1
 	{
 		get
@@ -301,6 +311,9 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Делительный диаметр колеса.
+	/// </summary>
 	public double d2
 	{
 		get
@@ -420,6 +433,9 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Значение контактного напряжения для проверки условия прочности.
+	/// </summary>
 	public double SigmaHFinal
 	{
 		get
@@ -455,6 +471,9 @@ public class SpurGear()
 		}
 	}
 
+	/// <summary>
+	/// Оптимизация ширины зубчатого венца.
+	/// </summary>
 	public void OptimizeBw()
 	{
 		while (!IsDeltaSigmaHAcceptable)
@@ -470,4 +489,6 @@ public class SpurGear()
 			}
 		}
 	}
+
+
 }
