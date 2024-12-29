@@ -5,7 +5,7 @@
 /// </summary>
 public class SpurGear()
 {
-	private double mn = 0;
+	private double m = 0;
 
 	public double Kp { get; set; } //коэффициент перегрузки
 
@@ -88,9 +88,9 @@ public class SpurGear()
 	public double KHBeta => 1.04;
 
 	/// <summary>
-	/// Вспомогательный коэффициент для косозубых колес.
+	/// Вспомогательный коэффициент для прямозубых колес.
 	/// </summary>
-	public double Kd => 680.0;
+	public double Kd => 780.0;
 
 	/// <summary>
 	/// Делительный диаметр шестерни.
@@ -108,7 +108,7 @@ public class SpurGear()
 	/// <summary>
 	/// Ширина зубчатых колес.
 	/// </summary>
-	public double bw => Math.Round(Gear.d * PsyBd);
+	public double bw => Math.Round(Aw * WheelWidthCoefficient.AveragePsyBa);
 
 	/// <summary>
 	/// Ширина колеса.
@@ -139,7 +139,7 @@ public class SpurGear()
 	{
 		get
 		{
-			var BW1 = BW2 + 6;
+			var BW1 = BW2 + 8;
 
 			Gear.Bw = BW1;
 
@@ -163,30 +163,22 @@ public class SpurGear()
 	/// <summary>
 	/// Модуль передачи в нормальном сечении.
 	/// </summary>
-	public double Mn
+	public double M
 	{
 		get
 		{
-			if (mn == 0)
+			if (m == 0)
 			{
-				mn = StandardModuleValuesList.StandardModuleValues.MinBy(value => Math.Abs(value - bw / PsyM));
+				m = StandardModuleValuesList.StandardModuleValues.MinBy(value => Math.Abs(value - (bw / PsyM)));
 			}
 
-			return mn;
+			return m;
 		}
 
-		set => mn = value;
+		set => m = value;
 	}
 
-	/// <summary>
-	/// Угол наклона зубьев в радианах.
-	/// </summary>
-	public double betaStrokeRad => Math.Round(Math.Asin(1.1 * Math.PI * Mn / bw), 3);
-
-	/// <summary>
-	/// Угол наклона зубьев в градусах.
-	/// </summary>
-	public double betaStroke => Math.Round(betaStrokeRad * 180 / Math.PI, 2);
+	public double zDelta => 2 * Aw / M;
 
 	/// <summary>
 	/// Число зубьев шестерни.
@@ -197,7 +189,7 @@ public class SpurGear()
 		{
 			if (Gear.z == 0)
 			{
-				Gear.z = Math.Ceiling(d1Stroke * Math.Cos(betaStrokeRad) / Mn);
+				Gear.z = zDelta / (i + 1);
 			}
 
 			return Gear.z;
@@ -212,58 +204,48 @@ public class SpurGear()
 	{
 		get
 		{
-			Wheel.z = z1 * i;
+			Wheel.z = zDelta - z1;
 
 			return Wheel.z;
 		}
 	}
 
+	private double aw;
+
 	/// <summary>
 	/// Межосевое расстояние.
 	/// </summary>
-	public double aw
+	public double Aw
 	{
 		get
 		{
-			return CenterDistancesStandardValuesList.CenterDistancesStandardValues.MinBy(v => Math.Abs(v - (Mn * (z1 + z2)) / (2 * Math.Cos(betaStrokeRad))));
+			if (aw == 0)
+			{
+				aw = CenterDistancesStandardValuesList.CenterDistancesStandardValues.MinBy(v =>
+					Math.Abs(v - (0.85 * (i + 1) *
+								  Math.Pow(
+									  (210000 * Wheel.t * 1000 * KHalpha * KHBeta) / (Math.Pow(SigmaH, 2) *
+										  Math.Pow(i, 2) * WheelWidthCoefficient.AveragePsyBa), 1.0 / 3.0))));
+			}
+
+			return aw;
+		}
+
+		set
+		{
+			aw = value;
 		}
 	}
 
 	/// <summary>
 	/// Финальный угол наклона зубьев в градусах.
 	/// </summary>
-	public double beta => Math.Round(Math.Round(betaRad, 3) * 180 / Math.PI, 2);
+	public double beta => 0;
 
 	/// <summary>
 	/// Финальный угол наклона зубьев в радианах.
 	/// </summary>
-	public double betaRad
-	{
-		get
-		{
-			double beta;
-
-			double betaRad;
-
-			do
-			{
-				betaRad = Math.Acos(Mn * (z2 + z1) / (2 * aw));
-
-				beta = betaRad * 180 / Math.PI;
-
-				if (beta < 8)
-				{
-					z1 -= 1;
-				}
-				else if (betaRad > 20)
-				{
-					z1 += 1;
-				}
-			} while (beta < 8 || beta > 20);
-
-			return Math.Round(betaRad, 3);
-		}
-	}
+	public double betaRad => 0;
 
 	/// <summary>
 	/// Делительный диаметр шестерни.
@@ -272,7 +254,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Gear.d = Math.Round(Mn * z1 / Math.Cos(betaRad), 3);
+			Gear.d = Math.Round(M * z1);
 
 			return Gear.d;
 		}
@@ -285,7 +267,7 @@ public class SpurGear()
 	{
 		get
 		{
-			Wheel.d = Math.Round(Mn * z2 / Math.Cos(betaRad), 3);
+			Wheel.d = Math.Round(M * z2);
 
 			return Wheel.d;
 		}
@@ -301,7 +283,7 @@ public class SpurGear()
 	/// <summary>
 	/// Коэффициент осевого перекрытия.
 	/// </summary>
-	public double SigmaBeta => Math.Round(bw * Math.Sin(betaRad) / (Math.PI * Mn), 3);
+	public double SigmaBeta => Math.Round(bw * Math.Sin(betaRad) / (Math.PI * M), 3);
 
 	public bool IsSigmaBetaAcceptable => SigmaBeta >= 1.1;
 
@@ -310,12 +292,14 @@ public class SpurGear()
 	/// </summary>
 	public double ZHbeta => Math.Round(Math.Sqrt(Math.Pow(Math.Cos(betaRad), 2) / SigmaAlpha), 3);
 
+	public double C => 0.06;
+
 	/// <summary>
 	/// Коэффициент распределения нагрузки между зубьями.
 	/// </summary>
-	public double KHalpha => 1 + 0.25 * (7 - 5);
+	public double KHalpha => 1 + C * (7 - 5);
 
-	public bool IsKHalphaAcceptable => KHalpha <= 1.6;
+	public bool IsKHalphaAcceptable => KHalpha <= 1.25;
 
 	/// <summary>
 	/// Окружная скорость.
@@ -459,7 +443,7 @@ public class SpurGear()
 
 	public double KF => Math.Round(KFbeta * KFalpha * KFipsilon, 2);
 
-	public double SigmaFFinal => Math.Round((Ft * KF * Yfs * YFbeta) / (bw * Mn));
+	public double SigmaFFinal => Math.Round((Ft * KF * Yfs * YFbeta) / (bw * M));
 
 	public bool IsSigmaFFinalAcceptable => SigmaFFinal > SigmaF;
 
@@ -470,14 +454,18 @@ public class SpurGear()
 
 	public bool IsDeltaSigmaFAcceptable => DeltaSigmaF >= -30.0;
 
+	public void OptimizeAw()
+	{
+		var index = CenterDistancesStandardValuesList.CenterDistancesStandardValues.IndexOf(Aw);
+
+		Aw = CenterDistancesStandardValuesList.CenterDistancesStandardValues[index - 1];
+	}
+
 	public void OptimizeModule()
 	{
-		while (!IsDeltaSigmaFAcceptable)
-		{
-			var index = StandardModuleValuesList.StandardModuleValues.IndexOf(Mn);
+		var index = StandardModuleValuesList.StandardModuleValues.IndexOf(M);
 
-			Mn = StandardModuleValuesList.StandardModuleValues[index - 1];
-		}
+		M = StandardModuleValuesList.StandardModuleValues[index - 1];
 	}
 
 	public double SigmaHFinalMax => Math.Round(SigmaHFinal * Math.Sqrt(Kp));
