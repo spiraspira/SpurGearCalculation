@@ -6,7 +6,7 @@ namespace SpurGearCalculation;
 
 public partial class MainForm : Form
 {
-	private SpurGear SpurGear { get; set; }
+	public SpurGear SpurGear { get; set; }
 
 	public MainForm()
 	{
@@ -142,8 +142,54 @@ public partial class MainForm : Form
 		Log($"SF1 = {SpurGear.Gear.SF}");
 		Log($"SF2 = {SpurGear.Wheel.SF}");
 		Log("Допускаемые напряжения изгиба:");
-		Log($"[σF]1 = {SpurGear.Gear.SigmaF}");
-		Log($"[σF]2 = {SpurGear.Wheel.SigmaF}");
+		Log($"[σF]1 = {SpurGear.Gear.SigmaF} МПа");
+		Log($"[σF]2 = {SpurGear.Wheel.SigmaF} МПа");
+
+		Log("\n===Допускаемые напряжения при перегрузках===");
+		Log("Максимальные допускаемые контактные напряжения:");
+		Log($"[σH]max1 = {SpurGear.Gear.SigmaHMax} МПа");
+		Log($"[σH]max2 = {SpurGear.Wheel.SigmaHMax} МПа");
+		Log($"σT1 = {SpurGear.Gear.SteelMechanicalProperty.SigmaT} МПа");
+		Log($"σT2 = {SpurGear.Wheel.SteelMechanicalProperty.SigmaT} МПа");
+		Log("Максимально допускаемые напряжения изгиба:");
+		Log($"[σF]max1 = {SpurGear.Gear.SigmaFMax} МПа");
+		Log($"[σF]max2 = {SpurGear.Wheel.SigmaFMax} МПа");
+
+		Log("\n===Проектный расчет цилиндрической прямозубой передачи===");
+		Log("Вспомогательный коэффициент");
+		Log($"Kd = {SpurGear.Kd}");
+		Log("Передаточной число передачи:");
+		Log($"u = {SpurGear.u}");
+		Log("Коэффициент ширины колеса относительно межосевого расстояния:");
+		Log($"ψba = {SpurGear.WheelWidthCoefficient.AveragePsyBa}");
+		Log("Коэффициент ширины колеса относительно делительного диаметра:");
+		Log($"ψbd = {SpurGear.PsyBd}");
+		var KHBetaForm = new KHBetaForm();
+		KHBetaForm.Owner = this;
+		KHBetaForm.ShowDialog();
+		Log($"KHβ = {SpurGear.KHBeta}");
+		Log($"KHα = {SpurGear.KHalpha}");
+		Log("Межосевое расстояние:");
+		Log($"aw = {SpurGear.Aw} мм");
+		Log("Ширина зубчатых колес:");
+		Log($"bw = {SpurGear.bw} мм");
+		Log($"Ширина шестерни и колеса:");
+		Log($"bw1 = {SpurGear.BW1} мм");
+		Log($"bw2 = {SpurGear.BW2} мм");
+		Log($"ψm = {SpurGear.PsyM}");
+		Log("Модуль передачи:");
+		Log($"m = {SpurGear.M} мм");
+		Log("Суммарное число зубьев:");
+		Log($"zΔ = {SpurGear.zDelta}");
+		Log($"Число зубьев шестерни и колеса:");
+		Log($"z1 = {SpurGear.z1}");
+		Log($"z1 = {SpurGear.z2}");
+		Log("Делительные диаметры:");
+		Log($"d1 = {SpurGear.d1}");
+		Log($"d2 = {SpurGear.d2}");
+
+		Log("\n===Проверочные расчеты цилиндрической прямозубой передачи===");
+
 	}
 
 	private void CreateSpurGear()
@@ -184,5 +230,7 @@ public partial class MainForm : Form
 	private void Log(string message)
 	{
 		rtb_Log.Text += "\n" + message;
+		rtb_Log.SelectionStart = rtb_Log.Text.Length;
+		rtb_Log.ScrollToCaret();
 	}
 }

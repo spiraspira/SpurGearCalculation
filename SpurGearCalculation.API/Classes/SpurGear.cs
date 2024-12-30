@@ -17,7 +17,7 @@ public class SpurGear()
 
 	public int ManufactoringAccuracy { get; set; } //степень точности изготовления колес
 
-	public double i { get; set; } //передаточное отношение
+	public double i { get; set; }//передаточное отношение
 
 	public SpurGearPart Gear { get; set; } //параметры шестерни
 
@@ -38,15 +38,17 @@ public class SpurGear()
 		gear.WorkMode = workMode;
 		gear.IsReversible = isReversible;
 		gear.ManufactoringAccuracy = manufactoringAccuracy;
-		gear.i = i;
+		gear.i = u;
 		wheel.L = driveLife;
 		wheel.WorkMode = workMode;
 		wheel.IsReversible = isReversible;
 		wheel.ManufactoringAccuracy = manufactoringAccuracy;
-		wheel.i = i;
+		wheel.i = u;
 		Gear = gear;
 		Wheel = wheel;
 	}
+
+	public double u => Math.Abs(i);
 
 	/// <summary>
 	/// Расчет среднего допускаемого контактного напряжения.
@@ -82,30 +84,17 @@ public class SpurGear()
 	/// <summary>
 	/// Вычисление коэффициента ширины колеса относительно делительного диаметра.
 	/// </summary>
-	public double PsyBd => 0.5 * WheelWidthCoefficient.AveragePsyBa * (i + 1);
+	public double PsyBd => 0.5 * WheelWidthCoefficient.AveragePsyBa * (u + 1);
 
 	/// <summary>
 	/// Коэффициент концентрации нагрузки. Сделать ввод с клавиатуры.
 	/// </summary>
-	public double KHBeta => 1.04;
+	public double KHBeta { get; set; }
 
 	/// <summary>
 	/// Вспомогательный коэффициент для прямозубых колес.
 	/// </summary>
 	public double Kd => 780.0;
-
-	/// <summary>
-	/// Делительный диаметр шестерни.
-	/// </summary>
-	public double d1Stroke
-	{
-		get
-		{
-			Gear.d = Math.Round(Kd * Math.Pow(Gear.t * KHBeta / (Math.Pow(SigmaH, 2) * PsyBd) * ((i + 1) / i), 1.0 / 3.0), 1);
-
-			return Gear.d;
-		}
-	}
 
 	/// <summary>
 	/// Ширина зубчатых колес.
@@ -191,7 +180,7 @@ public class SpurGear()
 		{
 			if (Gear.z == 0)
 			{
-				Gear.z = zDelta / (i + 1);
+				Gear.z = zDelta / (u + 1);
 			}
 
 			return Gear.z;
@@ -224,10 +213,10 @@ public class SpurGear()
 			if (aw == 0)
 			{
 				aw = CenterDistancesStandardValuesList.CenterDistancesStandardValues.MinBy(v =>
-					Math.Abs(v - (0.85 * (i + 1) *
+					Math.Abs(v - (0.85 * (u + 1) *
 								  Math.Pow(
 									  (210000 * Wheel.t * 1000 * KHalpha * KHBeta) / (Math.Pow(SigmaH, 2) *
-										  Math.Pow(i, 2) * WheelWidthCoefficient.AveragePsyBa), 1.0 / 3.0))));
+										  Math.Pow(u, 2) * WheelWidthCoefficient.AveragePsyBa), 1.0 / 3.0))));
 			}
 
 			return aw;
@@ -240,14 +229,9 @@ public class SpurGear()
 	}
 
 	/// <summary>
-	/// Финальный угол наклона зубьев в градусах.
+	/// Угол наклона зубьев.
 	/// </summary>
 	public double beta => 0;
-
-	/// <summary>
-	/// Финальный угол наклона зубьев в радианах.
-	/// </summary>
-	public double betaRad => 0;
 
 	/// <summary>
 	/// Делительный диаметр шестерни.
@@ -278,21 +262,21 @@ public class SpurGear()
 	/// <summary>
 	/// Коэффициент торцового перекрытия.
 	/// </summary>
-	public double SigmaAlpha => Math.Round((0.95 - 1.6 * (1.0 / z1 + 1.0 / z2)) * (1 + Math.Cos(betaRad)) * Math.Cos(betaRad), 3);
+	public double SigmaAlpha => Math.Round((0.95 - 1.6 * (1.0 / z1 + 1.0 / z2)) * (1 + Math.Cos(beta)) * Math.Cos(beta), 3);
 
 	public bool IsSigmaAlphaAcceptable => SigmaAlpha >= 1.1;
 
 	/// <summary>
 	/// Коэффициент осевого перекрытия.
 	/// </summary>
-	public double SigmaBeta => Math.Round(bw * Math.Sin(betaRad) / (Math.PI * M), 3);
+	public double SigmaBeta => Math.Round(bw * Math.Sin(beta) / (Math.PI * M), 3);
 
 	public bool IsSigmaBetaAcceptable => SigmaBeta >= 1.1;
 
 	/// <summary>
 	/// Коэффициент повышения прочности по контактным напряжениям.
 	/// </summary>
-	public double ZHbeta => Math.Round(Math.Sqrt(Math.Pow(Math.Cos(betaRad), 2) / SigmaAlpha), 3);
+	public double ZHbeta => Math.Round(Math.Sqrt(Math.Pow(Math.Cos(beta), 2) / SigmaAlpha), 3);
 
 	public double C => 0.06;
 
@@ -335,7 +319,7 @@ public class SpurGear()
 	/// <summary>
 	/// Значение контактного напряжения для проверки условия прочности.
 	/// </summary>
-	public double SigmaHFinal => Math.Round(1.18 * ZHbeta * Math.Sqrt(((210000 * Gear.t * 1000 * KH) / (Math.Pow(d1, 2) * BW2 * Math.Sin(0.698132)) * ((i + 1) / i))), 2);
+	public double SigmaHFinal => Math.Round(1.18 * ZHbeta * Math.Sqrt(((210000 * Gear.t * 1000 * KH) / (Math.Pow(d1, 2) * BW2 * Math.Sin(0.698132)) * ((u + 1) / u))), 2);
 
 	public bool IsSigmaHFinalAcceptable => SigmaHFinal <= SigmaH;
 
@@ -373,22 +357,22 @@ public class SpurGear()
 	/// <summary>
 	/// ?
 	/// </summary>
-	public double Fr => Math.Round(Ft * Math.Tan(0.349) / Math.Cos(betaRad));
+	public double Fr => Math.Round(Ft * Math.Tan(0.349) / Math.Cos(beta));
 
 	/// <summary>
 	/// ?
 	/// </summary>
-	public double Fa => Math.Round(Ft * Math.Tan(betaRad));
+	public double Fa => Math.Round(Ft * Math.Tan(beta));
 
 	/// <summary>
 	/// Эквивалентное число зубьев шестерни.
 	/// </summary>
-	public double Znu1 => Math.Round(z1 / Math.Pow(Math.Cos(betaRad), 3), 1);
+	public double Znu1 => Math.Round(z1 / Math.Pow(Math.Cos(beta), 3), 1);
 
 	/// <summary>
 	/// Эквивалентное число зубьев колеса.
 	/// </summary>
-	public double Znu2 => Math.Round(z2 / Math.Pow(Math.Cos(betaRad), 3), 1);
+	public double Znu2 => Math.Round(z2 / Math.Pow(Math.Cos(beta), 3), 1);
 
 	/// <summary>
 	/// Установка коэффициентов формы зуба (выбираем вручную по графику).
