@@ -183,13 +183,125 @@ public partial class MainForm : Form
 		Log($"zΔ = {SpurGear.zDelta}");
 		Log($"Число зубьев шестерни и колеса:");
 		Log($"z1 = {SpurGear.z1}");
-		Log($"z1 = {SpurGear.z2}");
+		Log($"z2 = {SpurGear.z2}");
 		Log("Делительные диаметры:");
-		Log($"d1 = {SpurGear.d1}");
-		Log($"d2 = {SpurGear.d2}");
+		Log($"d1 = {SpurGear.d1} мм");
+		Log($"d2 = {SpurGear.d2} мм");
 
 		Log("\n===Проверочные расчеты цилиндрической прямозубой передачи===");
+		Log("Модуль упругости:");
+		Log($"Enp = {SpurGear.Enp} МПа");
+		Log("Коэффициент торцового перекрытия:");
+		Log($"εα = {SpurGear.EpsilonAlpha}");
+		Log("Коэффициент осевого перекрытия:");
+		Log($"εβ = {SpurGear.EpsilonBeta}");
+		Log($"ZHβ = {SpurGear.ZHbeta}");
+		Log("Коэффициент твердости и типа зубьев:");
+		Log($"C = {SpurGear.C}");
+		Log("Коэффициент распределения нагрузки между зубьями:");
+		Log($"KHα = {SpurGear.KHalpha} <= 1.25 {SpurGear.IsKHalphaAcceptable}");
+		Log("Окружная скорость:");
+		Log($"υ = {SpurGear.ipsilon} м/с");
+		Log("Коэффициент расчетной нагрузки:");
+		Log($"KH = {SpurGear.KH}");
+		Log("Проверка на прочность");
+		Log($"σH = {SpurGear.SigmaHFinal} МПа");
+		do
+		{
+			Log($"{SpurGear.SigmaHFinal} > {SpurGear.SigmaH}");
+			Log($"Погрешность ΔσH = {SpurGear.DeltaSigmaH}% {SpurGear.IsDeltaSigmaHAcceptable}");
+			if (!SpurGear.IsDeltaSigmaHAcceptable)
+			{
+				SpurGear.Optimizeaw();
+				SpurGear.Optimizem();
+				Log($"aw = {SpurGear.Aw} мм");
+				Log($"m = {SpurGear.M} мм");
+				Log($"zΔ = {SpurGear.zDelta}");
+				Log($"z1 = {SpurGear.z1}");
+				Log($"z2 = {SpurGear.z2}");
+				Log($"{SpurGear.SigmaHFinal} > {SpurGear.SigmaH}");
+				Log($"Погрешность ΔσH = {SpurGear.DeltaSigmaH}% {SpurGear.IsDeltaSigmaHAcceptable}");
+			}
+		} while (!SpurGear.IsDeltaSigmaHAcceptable);
+		Log("Проверочный расчет прочности передачи по напряжениям изгиба:");
+		Log($"Ft = {SpurGear.Ft} Н");
+		Log($"Fr = {SpurGear.Fr} Н");
+		Log($"Fa = {SpurGear.Fa} Н");
+		Log("Эквивалентные числа зубьев:");
+		Log($"Zυ1 = {SpurGear.z1}");
+		Log($"Zυ2 = {SpurGear.z2}");
+		var YFSForm = new YFSForm();
+		YFSForm.Owner = this;
+		YFSForm.ShowDialog();
+		Log("Коэффициенты формы зуба:");
+		Log($"YFS1 = {SpurGear.Gear.Yfs}");
+		Log($"YFS2 = {SpurGear.Gear.Yfs}");
+		Log($"[σF]1/YFS1 = {SpurGear.Gear.SigmaFYfsRelation}");
+		Log($"[σF]2/YFS2 = {SpurGear.Wheel.SigmaFYfsRelation}");
+		Log($"[σF] = {SpurGear.SigmaF}");
+		Log($"Коэффициент YFβ = {SpurGear.YFbeta}");
+		Log($"ψbd = {SpurGear.PsyBd}");
+		var KFBetaForm = new KFBetaForm();
+		KFBetaForm.Owner = this;
+		KFBetaForm.ShowDialog();
+		Log($"KFα = {SpurGear.KFalpha}");
+		Log($"KFβ = {SpurGear.KFbeta}");
+		Log($"KFυ = {SpurGear.KFipsilon}");
+		Log("Коэффициент расчетной нагрузки по напряжениям изгиба:");
+		Log($"KF = {SpurGear.KF}");
+		do
+		{
+			Log($"{SpurGear.SigmaFFinal} > {SpurGear.SigmaF}");
+			Log($"Погрешность ΔσF = {SpurGear.DeltaSigmaF}% {SpurGear.IsDeltaSigmaFAcceptable}");
+			if (!SpurGear.IsDeltaSigmaFAcceptable)
+			{
+				SpurGear.Optimizem();
+				Log($"aw = {SpurGear.Aw} мм");
+				Log($"m = {SpurGear.M} мм");
+				Log($"zΔ = {SpurGear.zDelta}");
+				Log($"z1 = {SpurGear.z1}");
+				Log($"z2 = {SpurGear.z2}");
+				Log($"{SpurGear.SigmaFFinal} > {SpurGear.SigmaF}");
+				Log($"Погрешность ΔσF = {SpurGear.DeltaSigmaF}% {SpurGear.IsDeltaSigmaFAcceptable}");
+			}
+		} while (!SpurGear.IsDeltaSigmaFAcceptable);
+		Log($"Максимальные контактные напряжения:");
+		Log($"σHmax = {SpurGear.SigmaHFinalMax} <= {SpurGear.SigmaHMax} {SpurGear.IsSigmaHFinalMaxAcceptable}");
+		Log($"Максимальные напряжения изгиба:");
+		Log($"σFmax = {SpurGear.SigmaFFinalMax} <= {SpurGear.SigmaFMax} {SpurGear.IsSigmaFFinalMaxAcceptable}");
 
+		Log("\n===Расчет геометрии передачи===");
+		Log("Диаметры вершин зубьев:");
+		Log($"da1 = {SpurGear.Gear.da} мм");
+		Log($"da2 = {SpurGear.Wheel.da} мм");
+		Log("Диаметры впадин зубьев:");
+		Log($"df1 = {SpurGear.Gear.df} мм");
+		Log($"df2 = {SpurGear.Wheel.df} мм");
+
+		Log("\n===РАСЧЕТ ОКОНЧЕН===");
+
+		PopulateDataGridView();
+	}
+
+	private void PopulateDataGridView()
+	{
+		dataGridView.Columns.Clear();
+		dataGridView.Rows.Clear();
+		dataGridView.Columns.Add("Parameter", "Параметр");
+		dataGridView.Columns.Add("SpurGear1", "Шестерня 1");
+		dataGridView.Columns.Add("SpurGear2", "Шестерня 2");
+
+		// Add rows to DataGridView
+		dataGridView.Rows.Add("Число зубьев z", SpurGear.z1, SpurGear.z2);
+		dataGridView.Rows.Add("Модуль m, мм", SpurGear.M, "");
+		dataGridView.Rows.Add("Фактическое передаточное число u = z2/z1", (double)SpurGear.z2 / SpurGear.z1, "");
+		dataGridView.Rows.Add("Угол наклона зубьев βº", SpurGear.beta, "");
+		dataGridView.Rows.Add("Делительный диаметр d, мм", SpurGear.d1, SpurGear.d2);
+		dataGridView.Rows.Add("Диаметр вершин da, мм", SpurGear.Gear.da, SpurGear.Wheel.da);
+		dataGridView.Rows.Add("Диаметр впадин df, мм", SpurGear.Gear.df, SpurGear.Wheel.df);
+		dataGridView.Rows.Add("Ширина зубчатого венца bw, мм", SpurGear.Gear.Bw, SpurGear.Wheel.Bw);
+		dataGridView.Rows.Add("Коэффициент смещения х", 0, 0);
+		dataGridView.Rows.Add("Межосевое расстояние Aw, мм", SpurGear.Aw, "");
 	}
 
 	private void CreateSpurGear()

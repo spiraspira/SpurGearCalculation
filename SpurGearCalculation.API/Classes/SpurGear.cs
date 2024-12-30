@@ -169,7 +169,7 @@ public class SpurGear()
 		set => m = value;
 	}
 
-	public double zDelta => 2 * Aw / M;
+	public double zDelta => Math.Round(2 * Aw / M);
 
 	/// <summary>
 	/// Число зубьев шестерни.
@@ -180,7 +180,7 @@ public class SpurGear()
 		{
 			if (Gear.z == 0)
 			{
-				Gear.z = zDelta / (u + 1);
+				Gear.z = Math.Round(zDelta / (u + 1));
 			}
 
 			return Gear.z;
@@ -262,28 +262,27 @@ public class SpurGear()
 	/// <summary>
 	/// Коэффициент торцового перекрытия.
 	/// </summary>
-	public double SigmaAlpha => Math.Round((0.95 - 1.6 * (1.0 / z1 + 1.0 / z2)) * (1 + Math.Cos(beta)) * Math.Cos(beta), 3);
+	public double EpsilonAlpha => Math.Round((0.95 - 1.6 * (1.0 / z1 + 1.0 / z2)) * (1 + Math.Cos(beta)) * Math.Cos(beta), 3);
 
-	public bool IsSigmaAlphaAcceptable => SigmaAlpha >= 1.1;
 
 	/// <summary>
 	/// Коэффициент осевого перекрытия.
 	/// </summary>
-	public double SigmaBeta => Math.Round(bw * Math.Sin(beta) / (Math.PI * M), 3);
+	public double EpsilonBeta => Math.Round(bw * Math.Sin(beta) / (Math.PI * M), 3);
 
-	public bool IsSigmaBetaAcceptable => SigmaBeta >= 1.1;
+	public bool IsEpsilonBetaAcceptable => EpsilonBeta >= 1.1;
 
 	/// <summary>
 	/// Коэффициент повышения прочности по контактным напряжениям.
 	/// </summary>
-	public double ZHbeta => Math.Round(Math.Sqrt(Math.Pow(Math.Cos(beta), 2) / SigmaAlpha), 3);
+	public double ZHbeta => Math.Round(Math.Sqrt(Math.Pow(Math.Cos(beta), 2) / EpsilonAlpha), 3);
 
 	public double C => 0.06;
 
 	/// <summary>
 	/// Коэффициент распределения нагрузки между зубьями.
 	/// </summary>
-	public double KHalpha => 1 + C * (7 - 5);
+	public double KHalpha => 1 + C * (ManufactoringAccuracy - 5);
 
 	public bool IsKHalphaAcceptable => KHalpha <= 1.25;
 
@@ -316,12 +315,12 @@ public class SpurGear()
 	/// </summary>
 	public double KH => Math.Round(KHalpha * KHBeta * KHipsilon, 2);
 
+	public double Enp => 2.1 * Math.Pow(10, 5);
+
 	/// <summary>
 	/// Значение контактного напряжения для проверки условия прочности.
 	/// </summary>
-	public double SigmaHFinal => Math.Round(1.18 * ZHbeta * Math.Sqrt(((210000 * Gear.t * 1000 * KH) / (Math.Pow(d1, 2) * BW2 * Math.Sin(0.698132)) * ((u + 1) / u))), 2);
-
-	public bool IsSigmaHFinalAcceptable => SigmaHFinal <= SigmaH;
+	public double SigmaHFinal => Math.Round(1.18 * ZHbeta * Math.Sqrt(((Enp * Gear.t * 1000 * KH) / (Math.Pow(d1, 2) * BW2 * Math.Sin(0.698132)) * ((u + 1) / u))), 2);
 
 	/// <summary>
 	/// Перегрузка/недогрузка.
@@ -398,7 +397,7 @@ public class SpurGear()
 	{
 		get
 		{
-			var yfbeta = Math.Round((1 - beta / 100) / SigmaAlpha, 3);
+			var yfbeta = Math.Round(1 / EpsilonAlpha, 3);
 
 			return yfbeta >= 0.7 ? yfbeta : 0.7;
 		}
@@ -416,7 +415,7 @@ public class SpurGear()
 		KFbeta = kfbeta;
 	}
 
-	public double KFipsilon { get; set; }
+	public double KFipsilon { get; set; } = 1;
 
 	/// <summary>
 	/// Ввод KFipsilon, выбираем вручную по таблице В.1.
@@ -440,18 +439,44 @@ public class SpurGear()
 
 	public bool IsDeltaSigmaFAcceptable => DeltaSigmaF >= -30.0;
 
-	public void OptimizeAw()
+	public void Optimizeaw()
 	{
-		var index = CenterDistancesStandardValuesList.CenterDistancesStandardValues.IndexOf(Aw);
+		if (DeltaSigmaH > 0)
+		{
+			var index = CenterDistancesStandardValuesList.CenterDistancesStandardValues.IndexOf(Aw);
 
-		Aw = CenterDistancesStandardValuesList.CenterDistancesStandardValues[index - 1];
+			Aw = CenterDistancesStandardValuesList.CenterDistancesStandardValues[index + 1];
+		}
+
+		if (DeltaSigmaH < 0)
+		{
+			var index = CenterDistancesStandardValuesList.CenterDistancesStandardValues.IndexOf(Aw);
+
+			Aw = CenterDistancesStandardValuesList.CenterDistancesStandardValues[index - 1];
+		}
+
+		Gear.z = 0;
+		Wheel.z = 0;
 	}
 
-	public void OptimizeModule()
+	public void Optimizem()
 	{
-		var index = StandardModuleValuesList.StandardModuleValues.IndexOf(M);
+		if (DeltaSigmaH > 0)
+		{
+			var index = StandardModuleValuesList.StandardModuleValues.IndexOf(M);
 
-		M = StandardModuleValuesList.StandardModuleValues[index - 1];
+			M = StandardModuleValuesList.StandardModuleValues[index + 1];
+		}
+
+		if (DeltaSigmaH < 0)
+		{
+			var index = StandardModuleValuesList.StandardModuleValues.IndexOf(M);
+
+			M = StandardModuleValuesList.StandardModuleValues[index - 1];
+		}
+
+		Gear.z = 0;
+		Wheel.z = 0;
 	}
 
 	public double SigmaHFinalMax => Math.Round(SigmaHFinal * Math.Sqrt(Kp));

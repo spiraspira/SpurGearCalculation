@@ -66,12 +66,14 @@
 			rtb_Log = new RichTextBox();
 			label18 = new Label();
 			b_Calculate = new Button();
+			dataGridView = new DataGridView();
 			((System.ComponentModel.ISupportInitialize)nud_L).BeginInit();
 			((System.ComponentModel.ISupportInitialize)nud_ManufactoringAccuracy).BeginInit();
 			((System.ComponentModel.ISupportInitialize)nud_Kp).BeginInit();
 			((System.ComponentModel.ISupportInitialize)nud_U).BeginInit();
 			groupBox1.SuspendLayout();
 			groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
 			SuspendLayout();
 			// 
 			// label1
@@ -432,17 +434,17 @@
 			// rtb_Log
 			// 
 			rtb_Log.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-			rtb_Log.Location = new Point(608, 74);
+			rtb_Log.Location = new Point(592, 71);
 			rtb_Log.Name = "rtb_Log";
 			rtb_Log.ReadOnly = true;
-			rtb_Log.Size = new Size(538, 440);
+			rtb_Log.Size = new Size(316, 440);
 			rtb_Log.TabIndex = 28;
 			rtb_Log.Text = "";
 			// 
 			// label18
 			// 
 			label18.AutoSize = true;
-			label18.Location = new Point(608, 45);
+			label18.Location = new Point(592, 45);
 			label18.Name = "label18";
 			label18.Size = new Size(127, 20);
 			label18.TabIndex = 29;
@@ -450,19 +452,31 @@
 			// 
 			// b_Calculate
 			// 
-			b_Calculate.Location = new Point(608, 12);
+			b_Calculate.Location = new Point(592, 12);
 			b_Calculate.Name = "b_Calculate";
-			b_Calculate.Size = new Size(538, 29);
+			b_Calculate.Size = new Size(316, 29);
 			b_Calculate.TabIndex = 30;
 			b_Calculate.Text = "Вычислить";
 			b_Calculate.UseVisualStyleBackColor = true;
 			b_Calculate.Click += b_Calculate_Click;
 			// 
+			// dataGridView
+			// 
+			dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+			dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+			dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dataGridView.Location = new Point(930, 16);
+			dataGridView.Name = "dataGridView";
+			dataGridView.RowHeadersWidth = 51;
+			dataGridView.Size = new Size(695, 500);
+			dataGridView.TabIndex = 31;
+			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1158, 526);
+			ClientSize = new Size(1637, 526);
+			Controls.Add(dataGridView);
 			Controls.Add(b_Calculate);
 			Controls.Add(label18);
 			Controls.Add(rtb_Log);
@@ -482,6 +496,7 @@
 			groupBox1.PerformLayout();
 			groupBox2.ResumeLayout(false);
 			groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -526,5 +541,6 @@
 		private RichTextBox rtb_Log;
 		private Label label18;
 		private Button b_Calculate;
+		private DataGridView dataGridView;
 	}
 }
