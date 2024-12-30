@@ -8,7 +8,7 @@ public enum ProcessingType
 	Normalization, //Нормализация
 	Enhancement, //Улучшение
 	Cementation, //Цементация
-	EnhancementHardening, //Улучшение + закалка ТВЧ
+				 //Enhancment2, //Улучшение + закалка ТВЧ
 	Nitriding, // Азотирование
 	Hardening // Закалка
 }

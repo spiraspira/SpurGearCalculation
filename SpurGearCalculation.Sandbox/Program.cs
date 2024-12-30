@@ -61,10 +61,10 @@ Console.WriteLine($"Делительный диаметр шестерни: {spu
 Console.WriteLine($"Делительный диаметр колеса: {spurGear.d2}");
 
 Console.WriteLine("\n===Проверочные расчеты===");
-spurGear.OptimizeAw();
+spurGear.Optimize();
 spurGear.OptimizeModule();
-Console.WriteLine($"Коэффициент торцового перекрытия: {spurGear.SigmaAlpha}");
-Console.WriteLine($"Коэффициент осевого перекрытия: {spurGear.SigmaBeta} >= 1.1 {spurGear.IsSigmaBetaAcceptable}");
+Console.WriteLine($"Коэффициент торцового перекрытия: {spurGear.EpsilonAlpha}");
+Console.WriteLine($"Коэффициент осевого перекрытия: {spurGear.EpsilonBeta} >= 1.1 {spurGear.IsEpsilonBetaAcceptable}");
 Console.WriteLine($"Коэффициент повышения прочности по контактным напряжениям: {spurGear.ZHbeta}");
 Console.WriteLine($"Коэффициент распределения нагрузки между зубьями: {spurGear.KHalpha} <= 1.6 {spurGear.IsKHalphaAcceptable}");
 Console.WriteLine($"Окружная скорость: {spurGear.ipsilon}");

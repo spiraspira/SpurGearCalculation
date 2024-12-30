@@ -172,11 +172,25 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// <value></value>
 	public double ZN => Math.Round(Math.Pow(NHG / NHE, 1.0 / 6.0), 3);
 
+	public bool IsZNAcceptable
+	{
+		get
+		{
+			bool result = ProcessingType switch
+			{
+				ProcessingType.Cementation or ProcessingType.Nitriding => ZN < 2.6,
+				_ => ZN < 1.8
+			};
+
+			return result;
+		}
+	}
+
 	/// <summary>
 	/// Расчет допускаемого контактного напряжения.
 	/// </summary>
 	/// <value></value>
-	public double SigmaH => SigmaHlim / Sh * ZN;
+	public double SigmaH => Math.Round(SigmaHlim / Sh * ZN, 2);
 
 	/// <summary>
 	/// Коэффициент влияния двухстороннего приложения нагрузки
@@ -229,6 +243,8 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	/// <value></value>
 	public double NFE => Math.Round(WorkModeProperty.MuF * 60 * 1 * n * TSigma / 10000) * 10000;
 
+	public double NFG => 4 * Math.Pow(10, 6);
+
 	/// <summary>
 	/// Вычисление коэффициента долговечности.
 	/// </summary>
@@ -237,9 +253,7 @@ public class SpurGearPart(SteelType steelType, ProcessingType processingType, do
 	{
 		get
 		{
-			double nfg = 4 * Math.Pow(10, 6);
-
-			double yn = Math.Round(Math.Pow(nfg / NFE, 1.0 / WorkModeProperty.Mf), 3);
+			double yn = Math.Round(Math.Pow(NFG / NFE, 1.0 / WorkModeProperty.Mf), 3);
 
 			if (IsHardnessLessThan350)
 			{
